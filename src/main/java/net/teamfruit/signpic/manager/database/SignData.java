@@ -70,4 +70,16 @@ public class SignData extends LocationData {
 		return data;
 	}
 
+	public void setSign(final String sign) {
+		this.sign = sign;
+	}
+
+	public void setPlayerName(final String playerName) {
+		this.playerName = playerName;
+	}
+
+	public void setPlayerUUID(final String playerUUID) {
+		this.playerUUID = playerUUID;
+	}
+
 }

@@ -38,4 +38,16 @@ public class DomainData {
 			return this.updateDate;
 		return this.updateDate = new Date();
 	}
+
+	public void setId(final Integer id) {
+		this.id = id;
+	}
+
+	public void setCreateDate(final Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public void setUpdateDate(final Date updateDate) {
+		this.updateDate = updateDate;
+	}
 }
