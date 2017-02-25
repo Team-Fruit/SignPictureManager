@@ -1,0 +1,9 @@
+## .gitignore ##
+# ignore all
+*
+*/
+
+# allow any
+!/eula.txt
+!/start.bat
+!/.gitignore

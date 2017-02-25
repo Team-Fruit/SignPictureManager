@@ -1,0 +1,18 @@
+## .gitignore ##
+# ignore all
+*
+*/
+
+# allow any
+!/src
+!/src/
+!/.spigot
+!/.spigot/
+!/.run
+!/.run/
+!/lang
+!/lang/
+!/plugin.yml
+!/pom.xml
+!/LICENSE
+!/.gitignore

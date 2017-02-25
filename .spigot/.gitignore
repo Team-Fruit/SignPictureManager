@@ -1,0 +1,9 @@
+## .gitignore ##
+# ignore all
+*
+*/
+
+# allow any
+!/BuildTools.jar
+!/install.sh
+!/.gitignore

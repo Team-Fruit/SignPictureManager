@@ -1,0 +1,76 @@
+name: SignPictureManager
+main: net.teamfruit.signpic.manager.SignPictureManager
+version: 2.3.0
+author: TeamFruit
+database: true
+commands:
+  signpic:
+    description: SignPictureManagerCommand.
+    usage: /<command> <subcommand>
+    permission: signpic.command
+    permission-message: You don't have <permission>
+permissins:
+  signpic.*:
+    description: Full permission of SignPictureManager.
+    children:
+      signpic.ignoresettings: true
+      signpic.place.*: true
+      signpic.command.*: true
+  signpic.ignoreettings:
+    description: Ignore limits set in Config.
+    default: false
+  signpic.place.*:
+    description: Permission to place SignPicture with all attributes.
+    default: op
+    children:
+      signpic.place: true
+      signpic.place.offset: true
+      signpic.place.animation: true
+      signpic.place.rotation: true
+      signpic.place.gif: true
+  signpic.place:
+    description: Permission to place SignPicture.
+    default: true
+  signpic.place.offset:
+    description: Allow placing of SignPicture with offset attribute.
+    default: true
+  signpic.place.animation:
+    description: Allow placing of SignPicture with animation attribute.
+    default: true
+  signpic.place.rotation:
+    description: Allow placing of SignPicture with animation attribute.
+    default: true
+  signpic.place.gif:
+    description: Allow to place SignPicture of Gif image.
+    default: true
+  signpic.command.*:
+    description: Full permission of SignPictureManager commands.
+    children:
+      signpic.command: true
+      signpic.command.open: true
+  signpic.command:
+    description: SignPictureManagerCommand.
+    default: op
+  signpic.command.open:
+    description: Command to open client's Gui.
+    default: op
+  signpic.command.scan.*:
+    description: Permission to execute all scan commands.
+    default: op
+    children:
+      signpic.command.scan.start: true
+      signpic.command.scan.pause: true
+      signpic.command.scan.resume: true
+      signpic.command.scan.cancel: true
+  signpic.command.scan.start:
+    description: Start scanning.
+    default: op
+  signpic.command.scan.pause:
+    description: Pause scanning.
+    default: op
+  signpic.command.scan.resume:
+    description: Resume scanning.
+    default: op
+  signpic.command.scan.cancel:
+    description: Cancel scan.
+    default: op
