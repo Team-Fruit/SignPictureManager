@@ -25,27 +25,28 @@ public class SignMessageListener implements PluginMessageListener {
 	@Override
 	public void onPluginMessageReceived(final @Nullable String channel, final @Nullable Player player, final @Nullable byte[] message) {
 		if (StringUtils.equals(channel, "signpic.list")) {
-			if (player!=null)
-				if (player.hasPermission("signpic.command.open")) {
-					this.logger.info("recv");
-					final SignPicturePacket packet = SignPictureManager.gson.fromJson(new String(message), SignPicturePacket.class);
-					if (packet!=null) {
-						if (StringUtils.equals(packet.command, "data")) {
-							if (StringUtils.isNotEmpty(packet.token)&&NumberUtils.isNumber(packet.data)) {
-								final int i = NumberUtils.toInt(packet.data);
-								final List<SignData> datas = this.plugin.tokendata.get(packet.token);
-								if (datas!=null) {
-									if (0<=i&&i<datas.size()) {
-										final SignData data = datas.get(i);
-										this.logger.info("send");
-										player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
-									}
-								}
-							}
-						}
-					}
-				}
+			if (player!=null&&message!=null) {
+				this.logger.info("recv");
+				onPacket(player, SignPictureManager.gson.fromJson(new String(message), SignPicturePacket.class));
+			}
 		}
 	}
 
+	public void onPacket(final Player player, final SignPicturePacket packet) {
+		if (StringUtils.equals(packet.command, "data")) {
+			if (player.hasPermission("signpic.command.open")) {
+				if (StringUtils.isNotEmpty(packet.token)&&NumberUtils.isNumber(packet.data)) {
+					final int i = NumberUtils.toInt(packet.data);
+					final List<SignData> datas = this.plugin.tokendata.get(packet.token);
+					if (datas!=null) {
+						if (0<=i&&i<datas.size()) {
+							final SignData data = datas.get(i);
+							this.logger.info("send");
+							player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
+						}
+					}
+				}
+			}
+		}
+	}
 }
