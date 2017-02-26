@@ -42,7 +42,7 @@ public class SignMessageListener implements PluginMessageListener {
 						if (0<=i&&i<datas.size()) {
 							final SignData data = datas.get(i);
 							this.logger.info("send");
-							player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
+							player.sendPluginMessage(this.plugin, "signpic.list", SignData.dateGson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
 						}
 					}
 				}
