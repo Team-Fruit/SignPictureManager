@@ -33,7 +33,7 @@ public class SignMessageListener implements PluginMessageListener {
 	}
 
 	public void onPacket(final Player player, final SignPicturePacket packet) {
-		if (StringUtils.equals(packet.command, "data")&&player.hasPermission("signpic.command.open")) {
+		if (StringUtils.equals(packet.command, "data")&&player.hasPermission("signpic.open")) {
 			if (StringUtils.isNotEmpty(packet.token)&&NumberUtils.isNumber(packet.data)) {
 				final int i = NumberUtils.toInt(packet.data);
 				final List<SignData> datas = this.plugin.tokendata.get(packet.token);
@@ -45,8 +45,10 @@ public class SignMessageListener implements PluginMessageListener {
 					}
 				}
 			}
-		} else if (StringUtils.equals(packet.command, "edit")) {
-		} else if (StringUtils.equals(packet.command, "delete")) {
+		} else if (StringUtils.equals(packet.command, "edit")&&player.hasPermission("signpic.manage.edit")) {
+
+		} else if (StringUtils.equals(packet.command, "remove")&&player.hasPermission("signpic.manage.remove")) {
+
 		}
 	}
 }

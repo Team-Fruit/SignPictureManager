@@ -43,7 +43,7 @@ public class ScanCommand extends SignPicCommand {
 		@Override
 		public boolean onSubCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
 			World world = null;
-			int speed = 60;
+			int speed = 1;
 			if (sender instanceof Player) {
 				if (args.length==0)
 					world = ((Player) sender).getWorld();

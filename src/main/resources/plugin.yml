@@ -51,3 +51,15 @@ permissins:
   signpic.scan:
     description: Permission to execute all scan commands.
     default: op
+  signpic.manage.*:
+    description: Permission to operate SignPicture.
+    default: op
+    children:
+      signpic.manage.edit: true
+      signpic.manage.remove: true
+  signpic.manage.edit:
+    description: Permission to rewrite SignPicture.
+    default: op
+  signpic.manage.remove:
+    description: Permission to destroy SignPicture.
+    default: op
