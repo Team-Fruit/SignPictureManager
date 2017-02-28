@@ -33,20 +33,20 @@ public class SignMessageListener implements PluginMessageListener {
 	}
 
 	public void onPacket(final Player player, final SignPicturePacket packet) {
-		if (StringUtils.equals(packet.command, "data")) {
-			if (player.hasPermission("signpic.command.open")) {
-				if (StringUtils.isNotEmpty(packet.token)&&NumberUtils.isNumber(packet.data)) {
-					final int i = NumberUtils.toInt(packet.data);
-					final List<SignData> datas = this.plugin.tokendata.get(packet.token);
-					if (datas!=null) {
-						if (0<=i&&i<datas.size()) {
-							final SignData data = datas.get(i);
-							this.logger.info("send");
-							player.sendPluginMessage(this.plugin, "signpic.list", SignData.dateGson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
-						}
+		if (StringUtils.equals(packet.command, "data")&&player.hasPermission("signpic.command.open")) {
+			if (StringUtils.isNotEmpty(packet.token)&&NumberUtils.isNumber(packet.data)) {
+				final int i = NumberUtils.toInt(packet.data);
+				final List<SignData> datas = this.plugin.tokendata.get(packet.token);
+				if (datas!=null) {
+					if (0<=i&&i<datas.size()) {
+						final SignData data = datas.get(i);
+						this.logger.info("send");
+						player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
 					}
 				}
 			}
+		} else if (StringUtils.equals(packet.command, "edit")) {
+		} else if (StringUtils.equals(packet.command, "delete")) {
 		}
 	}
 }

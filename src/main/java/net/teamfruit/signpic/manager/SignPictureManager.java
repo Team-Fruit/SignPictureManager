@@ -18,6 +18,7 @@ import com.google.common.base.Charsets;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import net.teamfruit.signpic.manager.command.OpenCommand;
 import net.teamfruit.signpic.manager.command.ScanCommand;
@@ -28,7 +29,7 @@ import net.teamfruit.signpic.manager.packet.SignMessageListener;
 import net.teamfruit.signpic.manager.scan.ScanManager;
 
 public class SignPictureManager extends JavaPlugin {
-	public static Gson gson = new Gson();
+	public static Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd HH:mm:ss").create();
 
 	public @Nullable SignDataBase signdata;
 	public Map<String, List<SignData>> tokendata = Maps.newHashMap();

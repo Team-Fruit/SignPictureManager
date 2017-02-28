@@ -17,13 +17,12 @@ import net.teamfruit.signpic.manager.SignPictureManager;
 
 public class SignPicCommand implements CommandExecutor, TabCompleter {
 
-	public static final String ROOT_PERMISSION = "signpic.command";
-
 	protected final SignPictureManager plugin;
 	private final List<SignPicCommand> subCommands = Lists.newArrayList();
 	private final String name;
 
 	private @Nullable SignPicCommand parent;
+	private @Nullable String permission;
 
 	public SignPicCommand(final SignPictureManager plugin, final String name) {
 		this.plugin = plugin;
@@ -45,10 +44,14 @@ public class SignPicCommand implements CommandExecutor, TabCompleter {
 		return this.name;
 	}
 
-	public String getPermission() {
-		if (isRoot())
-			return ROOT_PERMISSION;
-		return ROOT_PERMISSION+"."+this.name;
+	public void setPermission(final String permission) {
+		this.permission = permission;
+	}
+
+	public boolean hasPermission(final CommandSender sender) {
+		if (this.permission!=null)
+			return sender.hasPermission(this.permission);
+		return true;
 	}
 
 	public void setParent(final SignPicCommand command) {
@@ -65,7 +68,7 @@ public class SignPicCommand implements CommandExecutor, TabCompleter {
 			final boolean b = onSubCommand(sender, command, label, args);
 			final SignPicCommand subCommand = getSubCommand(sender, command, label, args);
 			if (subCommand!=null) {
-				if (sender.hasPermission(subCommand.getPermission()))
+				if (subCommand.hasPermission(sender))
 					return subCommand.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length))||b;
 				else
 					sender.sendMessage(command.getPermissionMessage());
@@ -97,7 +100,7 @@ public class SignPicCommand implements CommandExecutor, TabCompleter {
 						list.add(subCommand.getName());
 			} else {
 				final SignPicCommand subCommand = getSubCommand(sender, command, label, args);
-				if (subCommand!=null&&sender.hasPermission(subCommand.getPermission()))
+				if (subCommand!=null&&subCommand.hasPermission(sender))
 					return subCommand.onTabComplete(sender, command, label, Arrays.copyOfRange(args, 1, args.length));
 			}
 		}

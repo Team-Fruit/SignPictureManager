@@ -10,8 +10,6 @@ import org.bukkit.entity.Player;
 
 import com.avaje.ebean.validation.NotEmpty;
 import com.avaje.ebean.validation.NotNull;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.kamesuta.mc.signpic.entry.EntryId;
 
 import net.teamfruit.signpic.manager.SignPictureManager;
@@ -19,7 +17,6 @@ import net.teamfruit.signpic.manager.SignPictureManager;
 @Entity
 @Table(name = "sign")
 public class SignData extends LocationData {
-	public static Gson dateGson = new GsonBuilder().setDateFormat("yyyy/MM/dd HH:mm:ss").create();
 
 	@NotEmpty
 	private @Nullable String sign;

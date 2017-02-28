@@ -15,7 +15,9 @@ permissins:
     children:
       signpic.ignoresettings: true
       signpic.place.*: true
-      signpic.command.*: true
+      signpic.open: true
+      signpic.scan: true
+      signpic.manage.*: true
   signpic.ignoreettings:
     description: Ignore limits set in Config.
     default: false
@@ -43,34 +45,9 @@ permissins:
   signpic.place.gif:
     description: Allow to place SignPicture of Gif image.
     default: true
-  signpic.command.*:
-    description: Full permission of SignPictureManager commands.
-    children:
-      signpic.command: true
-      signpic.command.open: true
-  signpic.command:
-    description: SignPictureManagerCommand.
-    default: op
-  signpic.command.open:
+  signpic.open:
     description: Command to open client's Gui.
     default: op
-  signpic.command.scan.*:
+  signpic.scan:
     description: Permission to execute all scan commands.
-    default: op
-    children:
-      signpic.command.scan.start: true
-      signpic.command.scan.pause: true
-      signpic.command.scan.resume: true
-      signpic.command.scan.cancel: true
-  signpic.command.scan.start:
-    description: Start scanning.
-    default: op
-  signpic.command.scan.pause:
-    description: Pause scanning.
-    default: op
-  signpic.command.scan.resume:
-    description: Resume scanning.
-    default: op
-  signpic.command.scan.cancel:
-    description: Cancel scan.
     default: op
