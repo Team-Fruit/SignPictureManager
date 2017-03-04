@@ -36,6 +36,10 @@ public class SignDataBase {
 			this.db.delete(data);
 	}
 
+	public SignData getSign(final int id) {
+		return this.db.find(SignData.class).where().eq("id", id).findUnique();
+	}
+
 	public List<SignData> getSigns() {
 		return this.db.find(SignData.class).findList();
 	}

@@ -5,8 +5,15 @@ import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang.BooleanUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.NumberUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.block.Block;
+import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
@@ -46,9 +53,48 @@ public class SignMessageListener implements PluginMessageListener {
 				}
 			}
 		} else if (StringUtils.equals(packet.command, "edit")&&player.hasPermission("signpic.manage.edit")) {
-
+			if (NumberUtils.isNumber(packet.token)) {
+				if (this.plugin.signdata!=null) {
+					try {
+						final SignData data = this.plugin.signdata.getSign(NumberUtils.toInt(packet.token));
+						final World world = Bukkit.getWorld(data.getWorldName());
+						final Location location = data.getLocation();
+						if (location!=null) {
+							final Block block = world.getBlockAt(location);
+							if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST) {
+								final Sign sign = (Sign) block.getState();
+								if (packet.data.length()>60) {
+									player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.signindexoutofbounds")).getBytes());
+									return;
+								}
+								for (int i = 0; i<=3; i++)
+									sign.setLine(i, StringUtils.substring(packet.data, i*15, (i+1)*15));
+								player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
+							}
+						}
+					} catch (final Exception e) {
+						player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
+					}
+				}
+			}
 		} else if (StringUtils.equals(packet.command, "remove")&&player.hasPermission("signpic.manage.remove")) {
-
+			if (NumberUtils.isNumber(packet.token)) {
+				if (this.plugin.signdata!=null) {
+					try {
+						final SignData data = this.plugin.signdata.getSign(NumberUtils.toInt(packet.token));
+						final World world = Bukkit.getWorld(data.getWorldName());
+						final Location location = data.getLocation();
+						if (location!=null) {
+							final Block block = world.getBlockAt(location);
+							if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST)
+								block.setType(Material.AIR, BooleanUtils.toBoolean(packet.data));
+							player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
+						}
+					} catch (final Exception e) {
+						player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
+					}
+				}
+			}
 		}
 	}
 }
