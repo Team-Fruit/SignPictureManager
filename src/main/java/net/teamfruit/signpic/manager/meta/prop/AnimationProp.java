@@ -37,7 +37,9 @@ public class AnimationProp implements ISignMetaProp<AnimationProp> {
 	}
 
 	public static enum RSNeed {
-		IGNORE(0), RS_ON(1), RS_OFF(2),
+		IGNORE(0),
+		RS_ON(1),
+		RS_OFF(2),
 		;
 
 		public final int id;

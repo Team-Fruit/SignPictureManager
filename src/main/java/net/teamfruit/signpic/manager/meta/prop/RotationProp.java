@@ -52,7 +52,9 @@ public class RotationProp implements ISignMetaProp<RotationProp> {
 	}
 
 	public static enum RotateType {
-		X(PropSyntax.ROTATION_X.id), Y(PropSyntax.ROTATION_Y.id), Z(PropSyntax.ROTATION_Z.id),
+		X(PropSyntax.ROTATION_X.id),
+		Y(PropSyntax.ROTATION_Y.id),
+		Z(PropSyntax.ROTATION_Z.id),
 		;
 
 		public final String id;
