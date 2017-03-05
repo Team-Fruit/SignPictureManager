@@ -1,31 +1,31 @@
 command:
   scan:
-    notscanned: スキャンは現在実行されていません！
+    notscanned: "スキャンは現在実行されていません！"
     start:
-      start: [SignPictureManager] %s のスキャンを開始しました。
-      speed: スキャンは1秒に%sチャンクの速度で実行されます。
+      start: "[SignPictureManager] %s のスキャンを開始しました。"
+      speed: "スキャンは1秒に%sチャンクの速度で実行されます。"
       helps:
-        - /signpic scan pause  スキャンを一時停止。
-        - /signpic scan cancel  スキャンをキャンセル。
-        - /signpic scan status スキャンのステータスを取得。
+        - "/signpic scan pause  スキャンを一時停止。"
+        - "/signpic scan cancel  スキャンをキャンセル。"
+        - "/signpic scan status スキャンのステータスを取得。"
     pause:
-      pause: [SignPictureManager] %s のスキャンを一時停止しました。
-      already: スキャンは既に一時停止されています！
+      pause: "[SignPictureManager] %s のスキャンを一時停止しました。"
+      already: "スキャンは既に一時停止されています！"
       helps:
-        - /signpic scan resume  スキャンを再開。
+        - "/signpic scan resume  スキャンを再開。"
     resume:
-      resume: [SignPictureManager] %s のキャンを再開しました。
-      already: スキャンは一時停止されていません！
+      resume: "[SignPictureManager] %s のキャンを再開しました。"
+      already: "スキャンは一時停止されていません！"
       helps:
-        - /signpic scan cancel  スキャンをキャンセル。
+        - "/signpic scan cancel  スキャンをキャンセル。"
     cancel:
-      cancel: [SignPictureManager] %s のスキャンをキャンセルしました。
+      cancel: "[SignPictureManager] %s のスキャンをキャンセルしました。"
     speed:
-      speed: [SignPictureManager] スキャン速度を%sに変更しました。
-      invalid: 無効な数字です。
+      speed: "[SignPictureManager] スキャン速度を%sに変更しました。"
+      invalid: "無効な数字です。"
     status:
-      status: スキャン:: %s, 完了:: %sチャンク, 残り:: %sチャンク
-      queue: キュー:: %s
+      status: "スキャン: %s, 完了: %sチャンク, 残り: %sチャンク"
+      queue: "キュー: %s"
 chat:
   scan:
-    status: 経過時間:: %s, ステータス:: %s,　完了:: %schunks, 残り:: %schunks
+    status: "経過時間: %s, ステータス: %s,　完了: %schunks, 残り: %schunks"

@@ -1,32 +1,32 @@
 command:
   scan:
-    notscanned: Scanning is not currently running!
+    notscanned: "Scanning is not currently running!"
     start:
-      start: [SignPictureManager] Scan of %s has started.
-      speed: The scan runs at the speed of %s chunk in 1 second.
+      start: "[SignPictureManager] Scan of %s has started."
+      speed: "The scan runs at the speed of %s chunk in 1 second."
       helps:
-        - /signpic scan pause  Pause scanning.
-        - /signpic scan cancel  Cancel scanning.
-        - /signpic scan status Get scan status.
+        - "/signpic scan pause  Pause scanning."
+        - "/signpic scan cancel  Cancel scanning."
+        - "/signpic scan status Get scan status."
     pause:
-      pause: [SignPictureManager] Scan of %s was paused.
-      already: Scanning has already paused!
+      pause: "[SignPictureManager] Scan of %s was paused."
+      already: "Scanning has already paused!"
       helps:
-        - /signpic scan resume  Resume scanning.
+        - "/signpic scan resume  Resume scanning."
     resume:
-      resume: [SignPictureManager] Scanning of %s was resumed.
-      already: Scanning is not paused!
+      resume: "[SignPictureManager] Scanning of %s was resumed."
+      already: "Scanning is not paused!"
       helps:
-        - /signpic scan cancel  Cancel scanning.
+        - "/signpic scan cancel  Cancel scanning."
     cancel:
-      cancel: [SignPictureManager] Scan of %s canceled.
+      cancel: "[SignPictureManager] Scan of %s canceled."
     speed:
-      speed: [SignPictureManager] Scan speed changed to %s.
-      invalid: Invalid number.
+      speed: "[SignPictureManager] Scan speed changed to %s."
+      invalid: "Invalid number."
     status:
-      status: Scanning:: %s, Complete:: %schunks, Remaining:: %schunks
-      queue: Queue:: %s
+      status: "Scanning: %s, Complete: %schunks, Remaining: %schunks"
+      queue: "Queue: %s"
 chat:
   scan:
-    status: Elapsed time:: %s, Status:: %s,　Complete:: %schunks, Remaining:: %schunks
-    done: Scan of %s has ended. Elapsed time:: %s, Complete:: %schunks
+    status: "Elapsed time: %s, Status: %s,　Complete: %schunks, Remaining: %schunks"
+    done: "Scan of %s has ended. Elapsed time: %s, Complete: %schunks"
