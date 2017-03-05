@@ -1,6 +1,6 @@
 name: SignPictureManager
 main: net.teamfruit.signpic.manager.SignPictureManager
-version: 2.3.0
+version: 1.0.0
 author: TeamFruit
 database: true
 commands:
