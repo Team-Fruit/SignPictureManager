@@ -1,11 +1,17 @@
 package net.teamfruit.signpic.manager;
 
+import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -112,10 +118,6 @@ public class SignEvent implements Listener {
 		for (final String str : this.config.getStringList("dimBlacklist"))
 			if (world.getName().equalsIgnoreCase(str))
 				return false;
-		final ContentId content = id.getContentId();
-		if (content!=null)
-			if (StringUtils.endsWithIgnoreCase(content.getURI(), ".gif")&&!player.hasPermission("signpic.place.gif"))
-				return false;
 		final SignMeta meta = id.getMeta();
 		if (meta!=null) {
 			if (meta.animations.isInclude()&&!player.hasPermission("signpic.place.animation"))
@@ -137,6 +139,28 @@ public class SignEvent implements Listener {
 			if (meta.sizes.data().width>this.config.getInt("limits.size"))
 				return false;
 		}
+		final ContentId content = id.getContentId();
+		if (content!=null)
+			if (!player.hasPermission("signpic.place.gif")) {
+				if (StringUtils.endsWithIgnoreCase(content.getURI(), ".gif"))
+					return false;
+				if (isGif(content.getURI()))
+					return false;
+			}
 		return true;
+	}
+
+	public boolean isGif(final String uri) {
+		final HttpUriRequest req = new HttpGet(uri);
+		try {
+			final HttpResponse res = Downloader.downloader.client.execute(req, HttpClientContext.create());
+			final String contentType = res.getFirstHeader("Content-Type").getValue();
+			return "image/gif".equalsIgnoreCase(contentType);
+		} catch (final IOException e) {
+			this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
+		} finally {
+			req.abort();
+		}
+		return false;
 	}
 }
