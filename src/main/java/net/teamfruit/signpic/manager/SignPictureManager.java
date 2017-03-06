@@ -10,6 +10,7 @@ import javax.annotation.Nullable;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -69,8 +70,8 @@ public class SignPictureManager extends JavaPlugin {
 			Bukkit.getMessenger().registerIncomingPluginChannel(this, "signpic.list", new SignMessageListener(this));
 
 			//init commands
-			final SignPicCommand rootCommand = new SignPicCommand(this, "signpic");
-			getCommand("signpic").setExecutor(rootCommand);
+			final SignPicCommand rootCommand = new SignPicCommand(this, "signpicturemanager");
+			getCommand("signpicturemanager").setExecutor(rootCommand);
 			rootCommand.registerSubCommand(new OpenCommand(this));
 			rootCommand.registerSubCommand(new ScanCommand(this));
 
@@ -78,7 +79,7 @@ public class SignPictureManager extends JavaPlugin {
 			this.scannerManager = new ScanManager(this);
 			this.scannerManager.onEnable();
 		} catch (final Exception e) {
-			getLogger().info(e.getMessage());
+			getLogger().info(ExceptionUtils.getFullStackTrace(e));
 			getPluginLoader().disablePlugin(this);
 		}
 	}

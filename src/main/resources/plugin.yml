@@ -4,19 +4,22 @@ version: 1.0.0
 author: TeamFruit
 database: true
 commands:
-  signpic:
+  signpicturemanager:
     description: SignPictureManagerCommand.
     usage: /<command> <subcommand>
-    permission: signpic.command
-    permission-message: You don't have <permission>
-permissins:
+    aliases:
+      - signpicmanager
+      - sm
+    permission-message: "You don't have <permission>"
+permissions:
   signpic.*:
     description: Full permission of SignPictureManager.
     children:
       signpic.ignoresettings: true
       signpic.place.*: true
-      signpic.open: true
-      signpic.scan: true
+      signpic.command.*: true
+      signpic.command.open: true
+      signpic.command.scan: true
       signpic.manage.*: true
   signpic.ignoreettings:
     description: Ignore limits set in Config.
@@ -30,7 +33,7 @@ permissins:
       signpic.place.animation: true
       signpic.place.rotation: true
       signpic.place.gif: true
-  signpic.place:
+  signpic.place: 
     description: Permission to place SignPicture.
     default: true
   signpic.place.offset:
@@ -45,10 +48,16 @@ permissins:
   signpic.place.gif:
     description: Allow to place SignPicture of Gif image.
     default: true
-  signpic.open:
+  signpic.command.*:
+    description: Execution permission of all commands.
+    default: op
+    children:
+      signpic.command.open: true
+      signpic.command.scan: true
+  signpic.command.open:
     description: Command to open client's Gui.
     default: op
-  signpic.scan:
+  signpic.command.scan:
     description: Permission to execute all scan commands.
     default: op
   signpic.manage.*:

@@ -70,8 +70,9 @@ public class SignPicCommand implements CommandExecutor, TabCompleter {
 			if (subCommand!=null) {
 				if (subCommand.hasPermission(sender))
 					return subCommand.onCommand(sender, command, label, Arrays.copyOfRange(args, 1, args.length))||b;
-				else
+				for (final String line : command.getPermissionMessage().replace("<permission>", this.permission).split("\n"))
 					sender.sendMessage(command.getPermissionMessage());
+				return true;
 			}
 			return b;
 		}

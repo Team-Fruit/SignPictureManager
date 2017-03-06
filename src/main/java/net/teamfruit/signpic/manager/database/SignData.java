@@ -63,8 +63,8 @@ public class SignData extends LocationData {
 		data.setY(block.getY());
 		data.setZ(block.getZ());
 		if (player!=null) {
-			data.playerName = player.getName();
-			data.playerUUID = player.getUniqueId().toString();
+			data.setPlayerName(player.getName());
+			data.setPlayerUUID(player.getUniqueId().toString());
 		}
 		data.sign = id.id();
 		return data;
