@@ -43,8 +43,4 @@ public class SignDataBase {
 	public List<SignData> getSigns() {
 		return this.db.find(SignData.class).findList();
 	}
-
-	public String getSignsJson() {
-		return SignPictureManager.gson.toJson(getSigns());
-	}
 }

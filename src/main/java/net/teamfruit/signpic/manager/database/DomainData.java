@@ -13,7 +13,7 @@ import com.avaje.ebean.annotation.CreatedTimestamp;
 public class DomainData {
 
 	@Id
-	private @Nullable Integer id;
+	private int id;
 
 	@CreatedTimestamp
 	private @Nullable Date createDate;
@@ -21,33 +21,27 @@ public class DomainData {
 	@Version
 	private @Nullable Date updateDate;
 
-	public Integer getId() {
-		if (this.id!=null)
-			return this.id;
-		return this.id = 0;
+	public int getId() {
+		return this.id;
 	}
 
-	public Date getCreateDate() {
-		if (this.createDate!=null)
-			return this.createDate;
-		return this.createDate = new Date();
-	}
-
-	public Date getUpdateDate() {
-		if (this.updateDate!=null)
-			return this.updateDate;
-		return this.updateDate = new Date();
-	}
-
-	public void setId(final Integer id) {
+	public void setId(final int id) {
 		this.id = id;
 	}
 
-	public void setCreateDate(final Date createDate) {
-		this.createDate = createDate;
+	public @Nullable Date getCreateDate() {
+		return this.createDate;
 	}
 
-	public void setUpdateDate(final Date updateDate) {
-		this.updateDate = updateDate;
+	public void setCreateDate(final Date date) {
+		this.createDate = date;
+	}
+
+	public @Nullable Date getUpdateDate() {
+		return this.updateDate;
+	}
+
+	public void setUpdateDate(final Date date) {
+		this.updateDate = date;
 	}
 }

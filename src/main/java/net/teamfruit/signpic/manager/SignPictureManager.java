@@ -26,11 +26,19 @@ import net.teamfruit.signpic.manager.command.ScanCommand;
 import net.teamfruit.signpic.manager.command.SignPicCommand;
 import net.teamfruit.signpic.manager.database.SignData;
 import net.teamfruit.signpic.manager.database.SignDataBase;
+import net.teamfruit.signpic.manager.database.SignDataTypeAdapter;
 import net.teamfruit.signpic.manager.packet.SignMessageListener;
 import net.teamfruit.signpic.manager.scan.ScanManager;
 
 public class SignPictureManager extends JavaPlugin {
-	public static Gson gson = new GsonBuilder().setDateFormat("yyyy/MM/dd HH:mm:ss").create();
+	public static Gson gson;
+
+	static {
+		gson = new GsonBuilder()
+				.setDateFormat("yyyy/MM/dd HH:mm:ss")
+				.registerTypeHierarchyAdapter(SignData.class, new SignDataTypeAdapter())
+				.create();
+	}
 
 	public @Nullable SignDataBase signdata;
 	public Map<String, List<SignData>> tokendata = Maps.newHashMap();
