@@ -29,9 +29,9 @@ public class SignDataBase {
 	public void removeSign(final Block block) {
 		final SignData data = this.db.find(SignData.class).where()
 				.ieq("worldName", block.getWorld().getName())
-				.ieq("x", String.valueOf(block.getX()))
-				.ieq("y", String.valueOf(block.getY()))
-				.ieq("z", String.valueOf(block.getZ())).findUnique();
+				.eq("x", block.getX())
+				.eq("y", block.getY())
+				.eq("z", block.getZ()).findUnique();
 		if (data!=null)
 			this.db.delete(data);
 	}
@@ -42,5 +42,9 @@ public class SignDataBase {
 
 	public List<SignData> getSigns() {
 		return this.db.find(SignData.class).findList();
+	}
+
+	public String getSignsJson() {
+		return SignPictureManager.gson.toJson(getSigns());
 	}
 }

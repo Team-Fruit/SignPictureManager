@@ -75,9 +75,7 @@ public class SignMessageListener implements PluginMessageListener {
 					}
 				}
 			}
-		} else if (StringUtils.equals(packet.command, "remove")&&player.hasPermission("signpic.manage.remove"))
-
-		{
+		} else if (StringUtils.equals(packet.command, "remove")&&player.hasPermission("signpic.manage.remove")) {
 			if (NumberUtils.isNumber(packet.token)) {
 				if (this.plugin.signdata!=null) {
 					try {
