@@ -31,7 +31,7 @@ public class SignMessageListener implements PluginMessageListener {
 
 	@Override
 	public void onPluginMessageReceived(final @Nullable String channel, final @Nullable Player player, final @Nullable byte[] message) {
-		if (StringUtils.equals(channel, "signpic.list")) {
+		if (StringUtils.equals(channel, "signpic.manager")) {
 			if (player!=null&&message!=null) {
 				this.logger.info("recv");
 				onPacket(player, SignPictureManager.gson.fromJson(new String(message), SignPicturePacket.class));
@@ -48,7 +48,7 @@ public class SignMessageListener implements PluginMessageListener {
 					if (0<=i&&i<datas.size()) {
 						final SignData data = datas.get(i);
 						this.logger.info("send");
-						player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
+						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
 					}
 				}
 			}
@@ -63,15 +63,15 @@ public class SignMessageListener implements PluginMessageListener {
 						if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST) {
 							final Sign sign = (Sign) block.getState();
 							if (packet.data.length()>60) {
-								player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.signindexoutofbounds")).getBytes());
+								player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.signindexoutofbounds")).getBytes());
 								return;
 							}
 							for (int i = 0; i<=3; i++)
 								sign.setLine(i, StringUtils.substring(packet.data, i*15, (i+1)*15));
-							player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
+							player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
 						}
 					} catch (final Exception e) {
-						player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
+						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
 					}
 				}
 			}
@@ -85,9 +85,9 @@ public class SignMessageListener implements PluginMessageListener {
 						final Block block = world.getBlockAt(location);
 						if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST)
 							block.setType(Material.AIR, BooleanUtils.toBoolean(packet.data));
-						player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
+						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
 					} catch (final Exception e) {
-						player.sendPluginMessage(this.plugin, "signpic.list", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
+						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
 					}
 				}
 			}
