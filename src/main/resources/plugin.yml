@@ -14,12 +14,11 @@ commands:
 permissions:
   signpic.*:
     description: Full permission of SignPictureManager.
+    default: false
     children:
       signpic.ignoresettings: true
       signpic.place.*: true
       signpic.command.*: true
-      signpic.command.open: true
-      signpic.command.scan: true
       signpic.manage.*: true
   signpic.ignoreettings:
     description: Ignore limits set in Config.

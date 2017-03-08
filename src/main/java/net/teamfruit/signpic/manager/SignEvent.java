@@ -127,17 +127,23 @@ public class SignEvent implements Listener {
 			if (meta.offsets.isInclude()) {
 				if (!player.hasPermission("signpic.place.offset"))
 					return false;
-				if (meta.offsets.data().x.get()>this.config.getInt("limits.offset"))
+				final int offset = this.config.getInt("limits.offset");
+				if (offset>0) {
+					if (meta.offsets.data().x.get()>offset)
+						return false;
+					if (meta.offsets.data().y.get()>offset)
+						return false;
+					if (meta.offsets.data().z.get()>offset)
+						return false;
+				}
+			}
+			final int size = this.config.getInt("limits.size");
+			if (size>0) {
+				if (meta.sizes.data().height>size)
 					return false;
-				if (meta.offsets.data().y.get()>this.config.getInt("limits.offset"))
-					return false;
-				if (meta.offsets.data().z.get()>this.config.getInt("limits.offset"))
+				if (meta.sizes.data().width>size)
 					return false;
 			}
-			if (meta.sizes.data().height>this.config.getInt("limits.size"))
-				return false;
-			if (meta.sizes.data().width>this.config.getInt("limits.size"))
-				return false;
 		}
 		final ContentId content = id.getContentId();
 		if (content!=null)
