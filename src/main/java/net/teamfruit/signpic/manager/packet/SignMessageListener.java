@@ -17,6 +17,8 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.messaging.PluginMessageListener;
 
+import com.kamesuta.mc.signpic.entry.EntryId;
+
 import net.teamfruit.signpic.manager.SignPictureManager;
 import net.teamfruit.signpic.manager.database.SignData;
 
@@ -56,7 +58,7 @@ public class SignMessageListener implements PluginMessageListener {
 			if (NumberUtils.isNumber(packet.token)) {
 				if (this.plugin.signdata!=null) {
 					try {
-						final SignData data = this.plugin.signdata.getSign(NumberUtils.toInt(packet.token));
+						final SignData data = this.plugin.signdata.getSign(Integer.parseInt(packet.token));
 						final World world = Bukkit.getWorld(data.getWorldName());
 						final Location location = data.getLocation();
 						final Block block = world.getBlockAt(location);
@@ -68,6 +70,12 @@ public class SignMessageListener implements PluginMessageListener {
 							}
 							for (int i = 0; i<=3; i++)
 								sign.setLine(i, StringUtils.substring(packet.data, i*15, (i+1)*15));
+							data.setSign(packet.data);
+							if (EntryId.from(packet.data).isValid()) {
+								data.setSign(packet.data);
+								this.plugin.signdata.setSign(data);
+							} else
+								this.plugin.signdata.removeSign(block);
 							player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
 						}
 					} catch (final Exception e) {
@@ -85,6 +93,7 @@ public class SignMessageListener implements PluginMessageListener {
 						final Block block = world.getBlockAt(location);
 						if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST)
 							block.setType(Material.AIR, BooleanUtils.toBoolean(packet.data));
+						this.plugin.signdata.removeSign(block);
 						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
 					} catch (final Exception e) {
 						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());

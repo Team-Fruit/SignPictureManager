@@ -21,6 +21,10 @@ public class SignDataBase {
 		this.db = plugin.getDatabase();
 	}
 
+	public void setSign(final SignData data) {
+		this.db.save(data);
+	}
+
 	public void setSign(final Block block, final @Nullable Player player, final EntryId id) {
 		if (id.isValid())
 			this.db.save(SignData.fromEvent(block, player, id));
