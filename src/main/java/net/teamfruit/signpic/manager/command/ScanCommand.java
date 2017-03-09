@@ -14,10 +14,8 @@ import org.bukkit.entity.Player;
 
 import com.google.common.collect.Lists;
 
-import net.teamfruit.signpic.manager.I18n;
 import net.teamfruit.signpic.manager.SignPictureManager;
 import net.teamfruit.signpic.manager.scan.ScanInfom;
-import net.teamfruit.signpic.manager.scan.ScanManager;
 import net.teamfruit.signpic.manager.scan.ScanManager.ScanTask;
 import net.teamfruit.signpic.manager.scan.Scanner;
 
@@ -61,15 +59,12 @@ public class ScanCommand extends SignPicCommand {
 			if (world==null)
 				return false;
 
-			final I18n i18n = this.plugin.i18n;
-			final ScanManager scannerManager = this.plugin.scannerManager;
-			if (i18n!=null&&scannerManager!=null) {
-				final Scanner scanner = scannerManager.scan(new Scanner(this.plugin, world, speed), speed);
-				sender.sendMessage(i18n.format("command.scan.start.start", world.getName()));
-				sender.sendMessage(i18n.format("command.scan.start.speed", speed));
-				sender.sendMessage(i18n.listFormat("command.scan.start.helps"));
-				new ScanInfom(this.plugin, scanner, sender).runTaskTimer(this.plugin, 200, 200);
-			}
+			final Scanner scanner = this.plugin.getScanManager().scan(new Scanner(this.plugin, world, speed), speed);
+			sender.sendMessage(this.plugin.getI18n().format("command.scan.start.start", world.getName()));
+			sender.sendMessage(this.plugin.getI18n().format("command.scan.start.speed", speed));
+			sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.start.helps"));
+			new ScanInfom(this.plugin, scanner, sender).runTaskTimer(this.plugin, 200, 200);
+
 			return true;
 		}
 
@@ -95,19 +90,16 @@ public class ScanCommand extends SignPicCommand {
 
 		@Override
 		public boolean onSubCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-			final I18n i18n = this.plugin.i18n;
-			final ScanManager scannerManager = this.plugin.scannerManager;
-			if (i18n!=null&&scannerManager!=null)
-				if (scannerManager.isScanning()) {
-					if (!scannerManager.isPause()) {
-						final ScanTask task = scannerManager.pause();
-						if (task!=null)
-							sender.sendMessage(i18n.format("command.scan.pause.pause", task.getWorldName()));
-						sender.sendMessage(i18n.listFormat("command.scan.pause.helps"));
-					} else
-						sender.sendMessage(i18n.format("command.scan.pause.already"));
+			if (this.plugin.getScanManager().isScanning()) {
+				if (!this.plugin.getScanManager().isPause()) {
+					final ScanTask task = this.plugin.getScanManager().pause();
+					if (task!=null)
+						sender.sendMessage(this.plugin.getI18n().format("command.scan.pause.pause", task.getWorldName()));
+					sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.pause.helps"));
 				} else
-					sender.sendMessage(i18n.format("command.scan.notscanned"));
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.pause.already"));
+			} else
+				sender.sendMessage(this.plugin.getI18n().format("command.scan.notscanned"));
 			return true;
 		}
 	}
@@ -120,19 +112,16 @@ public class ScanCommand extends SignPicCommand {
 
 		@Override
 		public boolean onSubCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-			final I18n i18n = this.plugin.i18n;
-			final ScanManager scannerManager = this.plugin.scannerManager;
-			if (i18n!=null&&scannerManager!=null)
-				if (scannerManager.isScanning()) {
-					if (scannerManager.isPause()) {
-						final ScanTask task = scannerManager.resume();
-						if (task!=null)
-							sender.sendMessage(i18n.format("command.scan.resume.resume", task.getWorldName()));
-						sender.sendMessage(i18n.listFormat("command.scan.resume.helps"));
-					} else
-						sender.sendMessage(i18n.format("command.scan.resume.already"));
+			if (this.plugin.getScanManager().isScanning()) {
+				if (this.plugin.getScanManager().isPause()) {
+					final ScanTask task = this.plugin.getScanManager().resume();
+					if (task!=null)
+						sender.sendMessage(this.plugin.getI18n().format("command.scan.resume.resume", task.getWorldName()));
+					sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.resume.helps"));
 				} else
-					sender.sendMessage(i18n.format("command.scan.notscanned"));
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.resume.already"));
+			} else
+				sender.sendMessage(this.plugin.getI18n().format("command.scan.notscanned"));
 			return true;
 		}
 	}
@@ -145,15 +134,12 @@ public class ScanCommand extends SignPicCommand {
 
 		@Override
 		public boolean onSubCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-			final I18n i18n = this.plugin.i18n;
-			final ScanManager scannerManager = this.plugin.scannerManager;
-			if (i18n!=null&&scannerManager!=null)
-				if (scannerManager.isScanning()) {
-					final ScanTask task = scannerManager.stop();
-					if (task!=null)
-						sender.sendMessage(i18n.format("command.scan.cancel.cancel", task.getWorldName()));
-				} else
-					sender.sendMessage(i18n.format("command.scan.notscanned"));
+			if (this.plugin.getScanManager().isScanning()) {
+				final ScanTask task = this.plugin.getScanManager().stop();
+				if (task!=null)
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.cancel.cancel", task.getWorldName()));
+			} else
+				sender.sendMessage(this.plugin.getI18n().format("command.scan.notscanned"));
 			return true;
 		}
 	}
@@ -166,20 +152,17 @@ public class ScanCommand extends SignPicCommand {
 
 		@Override
 		public boolean onSubCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-			final I18n i18n = this.plugin.i18n;
-			final ScanManager scannerManager = this.plugin.scannerManager;
-			if (i18n!=null&&scannerManager!=null)
-				if (scannerManager.isScanning()) {
-					if (args.length<1)
-						return false;
-					if (!NumberUtils.isNumber(args[0])) {
-						sender.sendMessage(i18n.format("command.scan.speed.invalid"));
-						return true;
-					}
-					final ScanTask task = scannerManager.setSpeed(NumberUtils.toInt(args[0]));
-					sender.sendMessage(i18n.format("command.scan.speed.speed", args[0]));
-				} else
-					sender.sendMessage(i18n.format("command.scan.notscanned"));
+			if (this.plugin.getScanManager().isScanning()) {
+				if (args.length<1)
+					return false;
+				if (!NumberUtils.isNumber(args[0])) {
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.speed.invalid"));
+					return true;
+				}
+				final ScanTask task = this.plugin.getScanManager().setSpeed(NumberUtils.toInt(args[0]));
+				sender.sendMessage(this.plugin.getI18n().format("command.scan.speed.speed", args[0]));
+			} else
+				sender.sendMessage(this.plugin.getI18n().format("command.scan.notscanned"));
 			return true;
 		}
 	}
@@ -192,22 +175,18 @@ public class ScanCommand extends SignPicCommand {
 
 		@Override
 		public boolean onSubCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-			final I18n i18n = this.plugin.i18n;
-			final ScanManager scannerManager = this.plugin.scannerManager;
-			if (i18n!=null&&scannerManager!=null)
-
-				if (scannerManager.isScanning()) {
-					final Scanner scanner = scannerManager.getCurrentScanner();
-					if (scanner!=null)
-						sender.sendMessage(i18n.format("command.scan.status.status", scanner.getState(), scanner.getCompleteChunkCount(), scanner.getQueue().size()));
-					if (scannerManager.getQueue().size()>0) {
-						final StringBuilder sb = new StringBuilder();
-						for (final ScanTask task : scannerManager.getQueue())
-							sb.append(task.getWorldName()).append(", ");
-						sender.sendMessage(i18n.format("command.scan.status.queue", sb));
-					}
-				} else
-					sender.sendMessage(i18n.format("command.scan.notscanned"));
+			if (this.plugin.getScanManager().isScanning()) {
+				final Scanner scanner = this.plugin.getScanManager().getCurrentScanner();
+				if (scanner!=null)
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.status.status", scanner.getState(), scanner.getCompleteChunkCount(), scanner.getQueue().size()));
+				if (this.plugin.getScanManager().getQueue().size()>0) {
+					final StringBuilder sb = new StringBuilder();
+					for (final ScanTask task : this.plugin.getScanManager().getQueue())
+						sb.append(task.getWorldName()).append(", ");
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.status.queue", sb));
+				}
+			} else
+				sender.sendMessage(this.plugin.getI18n().format("command.scan.notscanned"));
 			return true;
 		}
 	}

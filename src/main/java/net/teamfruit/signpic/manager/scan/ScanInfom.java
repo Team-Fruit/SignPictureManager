@@ -4,7 +4,6 @@ import org.apache.commons.lang.time.DurationFormatUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import net.teamfruit.signpic.manager.I18n;
 import net.teamfruit.signpic.manager.SignPictureManager;
 
 public class ScanInfom extends BukkitRunnable {
@@ -23,23 +22,21 @@ public class ScanInfom extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		final I18n i18n = this.plugin.i18n;
 		final String elapsed = DurationFormatUtils.formatPeriod(this.startTime, System.currentTimeMillis(), "HH:mm:ss");
-		if (i18n!=null)
-			switch (this.scanner.getState()) {
-				case GETCHUNKCOORDS:
-					this.sender.sendMessage(i18n.format("chat.scan.status", elapsed, this.scanner.getState(), 0, 0));
-					break;
-				case SCANNING:
-				case PAUSE:
-					this.sender.sendMessage(i18n.format("chat.scan.status", elapsed, this.scanner.getState(), this.scanner.getCompleteChunkCount(), this.scanner.getQueue().size()));
-					break;
-				case DONE:
-					this.sender.sendMessage(i18n.format("chat.scan.status", elapsed, this.scanner.getState(), 0, 0));
-					cancel();
-				default:
-					return;
-			}
+		switch (this.scanner.getState()) {
+			case GETCHUNKCOORDS:
+				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.status", elapsed, this.scanner.getState(), 0, 0));
+				break;
+			case SCANNING:
+			case PAUSE:
+				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.status", elapsed, this.scanner.getState(), this.scanner.getCompleteChunkCount(), this.scanner.getQueue().size()));
+				break;
+			case DONE:
+				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.status", elapsed, this.scanner.getState(), 0, 0));
+				cancel();
+			default:
+				return;
+		}
 	}
 
 }

@@ -104,9 +104,7 @@ public class Scanner extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		final ScanManager scannerManager = this.plugin.scannerManager;
-		if (scannerManager==null)
-			return;
+		final ScanManager scannerManager = this.plugin.getScanManager();
 		if (this.state==ScanState.PAUSE)
 			return;
 		if (this.state==ScanState.DONE) {

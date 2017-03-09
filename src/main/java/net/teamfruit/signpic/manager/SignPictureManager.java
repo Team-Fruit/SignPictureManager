@@ -44,8 +44,8 @@ public class SignPictureManager extends JavaPlugin {
 	public Map<String, List<SignData>> tokendata = Maps.newHashMap();
 
 	private @Nullable SignDataBase signdata;
-	public @Nullable ScanManager scannerManager;
-	public @Nullable I18n i18n;
+	private @Nullable ScanManager scannerManager;
+	private @Nullable I18n i18n;
 
 	public SignDataBase getSignData() {
 		if (this.signdata!=null)
