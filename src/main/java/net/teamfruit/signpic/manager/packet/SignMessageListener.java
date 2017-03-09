@@ -56,48 +56,44 @@ public class SignMessageListener implements PluginMessageListener {
 			}
 		} else if (StringUtils.equals(packet.command, "edit")&&player.hasPermission("signpic.manage.edit")) {
 			if (NumberUtils.isNumber(packet.token)) {
-				if (this.plugin.signdata!=null) {
-					try {
-						final SignData data = this.plugin.signdata.getSign(Integer.parseInt(packet.token));
-						final World world = Bukkit.getWorld(data.getWorldName());
-						final Location location = data.getLocation();
-						final Block block = world.getBlockAt(location);
-						if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST) {
-							final Sign sign = (Sign) block.getState();
-							if (packet.data.length()>60) {
-								player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.signindexoutofbounds")).getBytes());
-								return;
-							}
-							for (int i = 0; i<=3; i++)
-								sign.setLine(i, StringUtils.substring(packet.data, i*15, (i+1)*15));
-							data.setSign(packet.data);
-							if (EntryId.from(packet.data).isValid()) {
-								data.setSign(packet.data);
-								this.plugin.signdata.setSign(data);
-							} else
-								this.plugin.signdata.removeSign(block);
-							player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
+				try {
+					final SignData data = this.plugin.getSignData().getSign(Integer.parseInt(packet.token));
+					final World world = Bukkit.getWorld(data.getWorldName());
+					final Location location = data.getLocation();
+					final Block block = world.getBlockAt(location);
+					if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST) {
+						final Sign sign = (Sign) block.getState();
+						if (packet.data.length()>60) {
+							player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.signindexoutofbounds")).getBytes());
+							return;
 						}
-					} catch (final Exception e) {
-						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
+						for (int i = 0; i<=3; i++)
+							sign.setLine(i, StringUtils.substring(packet.data, i*15, (i+1)*15));
+						data.setSign(packet.data);
+						if (EntryId.from(packet.data).isValid()) {
+							data.setSign(packet.data);
+							this.plugin.getSignData().setSign(data);
+						} else
+							this.plugin.getSignData().removeSign(block);
+						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
 					}
+				} catch (final Exception e) {
+					player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
 				}
 			}
 		} else if (StringUtils.equals(packet.command, "remove")&&player.hasPermission("signpic.manage.remove")) {
 			if (NumberUtils.isNumber(packet.token)) {
-				if (this.plugin.signdata!=null) {
-					try {
-						final SignData data = this.plugin.signdata.getSign(NumberUtils.toInt(packet.token));
-						final World world = Bukkit.getWorld(data.getWorldName());
-						final Location location = data.getLocation();
-						final Block block = world.getBlockAt(location);
-						if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST)
-							block.setType(Material.AIR, BooleanUtils.toBoolean(packet.data));
-						this.plugin.signdata.removeSign(block);
-						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
-					} catch (final Exception e) {
-						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
-					}
+				try {
+					final SignData data = this.plugin.getSignData().getSign(NumberUtils.toInt(packet.token));
+					final World world = Bukkit.getWorld(data.getWorldName());
+					final Location location = data.getLocation();
+					final Block block = world.getBlockAt(location);
+					if (block.getType()==Material.WALL_SIGN||block.getType()==Material.SIGN_POST)
+						block.setType(Material.AIR, BooleanUtils.toBoolean(packet.data));
+					this.plugin.getSignData().removeSign(block);
+					player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("accept", packet.token, "signpic.manager.accept")).getBytes());
+				} catch (final Exception e) {
+					player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("error", packet.token, "signpic.manager.error.unknown")).getBytes());
 				}
 			}
 		}

@@ -149,8 +149,7 @@ public class Scanner extends BukkitRunnable {
 							if (b.getType()==Material.WALL_SIGN||b.getType()==Material.SIGN_POST) {
 								final Sign sign = (Sign) b.getState();
 								try {
-									if (this.plugin.signdata!=null)
-										this.plugin.signdata.setSign(b, null, EntryId.fromStrings(sign.getLines()));
+									this.plugin.getSignData().setSign(b, null, EntryId.fromStrings(sign.getLines()));
 								} catch (final Exception e) {
 									this.plugin.getLogger().info(ExceptionUtils.getFullStackTrace(e));
 								}

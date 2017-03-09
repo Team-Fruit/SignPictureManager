@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.annotation.Nullable;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.http.HttpResponse;
@@ -34,15 +32,15 @@ import net.teamfruit.signpic.manager.meta.SignMeta;
 
 public class SignEvent implements Listener {
 	private final Logger logger;
-	public final @Nullable SignDataBase signdata;
+	public final SignDataBase signdata;
 	public final FileConfiguration config;
-	public final @Nullable I18n i18n;
+	public final I18n i18n;
 
 	public SignEvent(final SignPictureManager plugin) {
 		this.logger = plugin.getLogger();
-		this.signdata = plugin.signdata;
+		this.signdata = plugin.getSignData();
 		this.config = plugin.getConfig();
-		this.i18n = plugin.i18n;
+		this.i18n = plugin.getI18n();
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -85,12 +83,11 @@ public class SignEvent implements Listener {
 			final boolean permission = checkPerm(sign.getBlock().getWorld(), sign.getPlayer(), id);
 			if (!permission) {
 				sign.setCancelled(true);
-				if (this.config.getBoolean("replaceSignText"))
-					if (this.i18n!=null) {
-						final String text = this.i18n.format("sign.replaceText");
-						for (int i = 0; i<=3; i++)
-							sign.setLine(i, StringUtils.substring(text, i*15, (i+1)*15));
-					}
+				if (this.config.getBoolean("replaceSignText")) {
+					final String text = this.i18n.format("sign.replaceText");
+					for (int i = 0; i<=3; i++)
+						sign.setLine(i, StringUtils.substring(text, i*15, (i+1)*15));
+				}
 			}
 		}
 	}
@@ -105,8 +102,7 @@ public class SignEvent implements Listener {
 	public void signEnable(final Block b, final Player p, final EntryId d) {
 		try {
 			this.logger.info("Placed!");
-			if (this.signdata!=null)
-				this.signdata.setSign(b, p, d);
+			this.signdata.setSign(b, p, d);
 		} catch (final Exception e) {
 			this.logger.info(ExceptionUtils.getFullStackTrace(e));
 		}
@@ -115,8 +111,7 @@ public class SignEvent implements Listener {
 	public void signDisable(final Block b) {
 		try {
 			this.logger.info("Removed!");
-			if (this.signdata!=null)
-				this.signdata.removeSign(b);
+			this.signdata.removeSign(b);
 		} catch (final Exception e) {
 			this.logger.info(ExceptionUtils.getFullStackTrace(e));
 		}

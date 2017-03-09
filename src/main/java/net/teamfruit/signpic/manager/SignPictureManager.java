@@ -2,6 +2,7 @@ package net.teamfruit.signpic.manager;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
@@ -40,10 +41,35 @@ public class SignPictureManager extends JavaPlugin {
 				.create();
 	}
 
-	public @Nullable SignDataBase signdata;
 	public Map<String, List<SignData>> tokendata = Maps.newHashMap();
+
+	private @Nullable SignDataBase signdata;
 	public @Nullable ScanManager scannerManager;
 	public @Nullable I18n i18n;
+
+	public SignDataBase getSignData() {
+		if (this.signdata!=null)
+			return this.signdata;
+		return this.signdata = new SignDataBase(this);
+	}
+
+	public ScanManager getScanManager() {
+		if (this.scannerManager!=null)
+			return this.scannerManager;
+		return this.scannerManager = new ScanManager(this);
+	}
+
+	public I18n getI18n() {
+		if (this.i18n!=null)
+			return this.i18n;
+		try {
+			final String langName = getConfig().getString("lang");
+			final String langFileName = StringUtils.endsWithIgnoreCase(langName, ".yml") ? langName : langName+".yml";
+			return this.i18n = new I18n(YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(new File(getDataFolder(), "lang/"+langFileName)), Charsets.UTF_8)));
+		} catch (final FileNotFoundException e) {
+			throw new RuntimeException();
+		}
+	}
 
 	@Override
 	public void onLoad() {
