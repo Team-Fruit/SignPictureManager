@@ -34,13 +34,15 @@ import net.teamfruit.signpic.manager.meta.SignMeta;
 
 public class SignEvent implements Listener {
 	private final Logger logger;
-	public @Nullable final SignDataBase signdata;
+	public final @Nullable SignDataBase signdata;
 	public final FileConfiguration config;
+	public final @Nullable I18n i18n;
 
 	public SignEvent(final SignPictureManager plugin) {
 		this.logger = plugin.getLogger();
 		this.signdata = plugin.signdata;
 		this.config = plugin.getConfig();
+		this.i18n = plugin.i18n;
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)
@@ -79,8 +81,18 @@ public class SignEvent implements Listener {
 		if (sign.isCancelled())
 			return;
 		final EntryId id = EntryId.fromStrings(sign.getLines());
-		if (id.isValid())
-			sign.setCancelled(!checkPerm(sign.getBlock().getWorld(), sign.getPlayer(), id));
+		if (id.isValid()) {
+			final boolean permission = checkPerm(sign.getBlock().getWorld(), sign.getPlayer(), id);
+			if (!permission) {
+				sign.setCancelled(true);
+				if (this.config.getBoolean("replaceSignText"))
+					if (this.i18n!=null) {
+						final String text = this.i18n.format("sign.replaceText");
+						for (int i = 0; i<=3; i++)
+							sign.setLine(i, StringUtils.substring(text, i*15, (i+1)*15));
+					}
+			}
+		}
 	}
 
 	@EventHandler(priority = EventPriority.MONITOR)

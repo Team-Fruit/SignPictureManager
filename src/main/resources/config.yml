@@ -2,4 +2,5 @@ limits:
   offset: 0
   size: 0
 dimBlacklist: []
+replaceSignText: true
 lang: en_us
