@@ -3,6 +3,7 @@ package net.teamfruit.signpic.manager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.List;
 import java.util.Map;
@@ -13,6 +14,7 @@ import javax.persistence.PersistenceException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -82,7 +84,9 @@ public class SignPictureManager extends JavaPlugin {
 		getLogger().info("Enable");
 		try {
 			//init config.yml
-			initConfing();
+			final FileConfiguration config = initConfing();
+			if (config.getInt("config-version")<Reference.CONFIG_VERSION)
+				updateConfig(new File(getDataFolder(), "config.yml"), config, getDefaultConfig("config.yml"));
 
 			//init i18n
 			final String langName = getConfig().getString("lang");
@@ -90,7 +94,11 @@ public class SignPictureManager extends JavaPlugin {
 			final File langFile = new File(getDataFolder(), "lang/"+langFileName);
 			if (!langFile.exists())
 				saveResource("lang/"+langFileName, false);
-			this.i18n = new I18n(YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(langFile), Charsets.UTF_8)));
+			final FileConfiguration lang = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(langFile), Charsets.UTF_8));
+			this.i18n = new I18n(lang);
+
+			if (this.i18n.getVersion()<Reference.LANG_VERSION)
+				updateConfig(langFile, lang, getDefaultConfig(langFileName));
 
 			//init DB
 			initDatabase();
@@ -142,10 +150,24 @@ public class SignPictureManager extends JavaPlugin {
 			this.scannerManager.onDisable();
 	}
 
-	public void initConfing() {
+	public FileConfiguration initConfing() {
+		final FileConfiguration config = getConfig();
 		saveDefaultConfig();
-		getConfig().options().copyDefaults(true);
+		config.options().copyDefaults(true);
 		reloadConfig();
 		saveConfig();
+		return config;
+	}
+
+	public FileConfiguration getDefaultConfig(final String filename) {
+		return YamlConfiguration.loadConfiguration(new InputStreamReader(getResource(filename), Charsets.UTF_8));
+	}
+
+	private void updateConfig(final File file, final FileConfiguration older, final FileConfiguration newer) throws IOException {
+		for (final String key : older.getKeys(false)) {
+			if (newer.contains(key)&&!"config-version".equals(key))
+				newer.set(key, older.get(key));
+		}
+		newer.save(file);
 	}
 }

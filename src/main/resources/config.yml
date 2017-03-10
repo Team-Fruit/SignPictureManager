@@ -1,5 +1,7 @@
 # Please check this page for details. 
 # https://github.com/Team-Fruit/SignPictureManager/wiki/Config
+# Do not change config-version.
+config-version: 1
 limits:
   offset: 0
   size: 0

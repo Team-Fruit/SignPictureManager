@@ -1,3 +1,5 @@
+# Do not change config-version.
+config-version: 1
 command:
   scan:
     notscanned: "Scanning is not currently running!"

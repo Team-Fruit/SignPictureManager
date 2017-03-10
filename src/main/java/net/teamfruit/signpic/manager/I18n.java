@@ -24,4 +24,8 @@ public class I18n {
 	public String[] listFormat(final String key) {
 		return this.lang.getStringList(key).toArray(new String[0]);
 	}
+
+	public int getVersion() {
+		return this.lang.getInt("config-version");
+	}
 }
