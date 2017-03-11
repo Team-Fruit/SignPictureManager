@@ -108,8 +108,8 @@ public class SignPictureManager extends JavaPlugin {
 			getServer().getPluginManager().registerEvents(new SignEvent(this), this);
 
 			//init packet handler
-			Bukkit.getMessenger().registerOutgoingPluginChannel(this, "signpic.list");
-			Bukkit.getMessenger().registerIncomingPluginChannel(this, "signpic.list", new SignMessageListener(this));
+			Bukkit.getMessenger().registerOutgoingPluginChannel(this, "signpic.manager");
+			Bukkit.getMessenger().registerIncomingPluginChannel(this, "signpic.manager", new SignMessageListener(this));
 
 			//init commands
 			final SignPicCommand rootCommand = new SignPicCommand(this, "signpicturemanager");
