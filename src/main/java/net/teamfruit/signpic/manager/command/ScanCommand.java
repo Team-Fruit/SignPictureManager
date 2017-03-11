@@ -32,6 +32,13 @@ public class ScanCommand extends SignPicCommand {
 		registerSubCommand(new StatusCommand(plugin));
 	}
 
+	@Override
+	public boolean onCommand(@Nullable final CommandSender sender, @Nullable final Command command, @Nullable final String label, @Nullable final String[] args) {
+		if (!super.onCommand(sender, command, label, args)&&sender!=null&&label!=null)
+			sender.sendMessage("/"+label+" scan <subcommand>");
+		return true;
+	}
+
 	public static class StartCommand extends SignPicCommand {
 
 		public StartCommand(final SignPictureManager plugin) {

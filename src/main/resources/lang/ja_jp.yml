@@ -30,6 +30,6 @@ command:
       queue: "キュー: %s"
 chat:
   scan:
-    status: "経過時間: %s, ステータス: %s,　完了: %schunks, 残り: %schunks"
+    status: "経過時間: %s, ステータス: %s, 完了: %schunks, 残り: %schunks"
 sign:
   replaceText: "このSignPictureを設置する権限はありません！"
