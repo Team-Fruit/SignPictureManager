@@ -142,6 +142,7 @@ public class ScanManager {
 				} catch (final IOException e) {
 					this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
 				}
+				cache.delete();
 			}
 		}
 
@@ -162,6 +163,7 @@ public class ScanManager {
 				} catch (final IOException e) {
 					this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
 				}
+				queue.delete();
 			}
 		}
 
