@@ -25,12 +25,12 @@ command:
     speed:
       speed: "[SignPictureManager] Scan speed changed to %s."
       invalid: "Invalid number."
-    status:
-      status: "Scanning: %s, Complete: %schunks, Remaining: %schunks"
+    stats:
+      stats: "Scanning: %s, Complete: %schunks, Remaining: %schunks"
       queue: "Queue: %s"
 chat:
   scan:
-    status: "Elapsed time: %s, Status: %s, Complete: %schunks, Remaining: %schunks"
+    stats: "Elapsed time: %s, Status: %s, Complete: %schunks, Remaining: %schunks"
     done: "Scan of %s has ended. Elapsed time: %s, Complete: %schunks"
 sign:
   replaceText: "You don't have permission to place this SignPicture!"

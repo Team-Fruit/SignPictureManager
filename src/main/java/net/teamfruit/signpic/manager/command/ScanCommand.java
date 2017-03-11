@@ -29,7 +29,7 @@ public class ScanCommand extends SignPicCommand {
 		registerSubCommand(new ResumeCommand(plugin));
 		registerSubCommand(new CancelCommand(plugin));
 		registerSubCommand(new SetSpeedCommand(plugin));
-		registerSubCommand(new StatusCommand(plugin));
+		registerSubCommand(new StatsCommand(plugin));
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class ScanCommand extends SignPicCommand {
 	public static class StartCommand extends SignPicCommand {
 
 		public StartCommand(final SignPictureManager plugin) {
-			super(plugin, "start");
+			super(plugin, "stats");
 		}
 
 		@Override
@@ -67,9 +67,9 @@ public class ScanCommand extends SignPicCommand {
 				return false;
 
 			final Scanner scanner = this.plugin.getScanManager().scan(new Scanner(this.plugin, world, speed), speed);
-			sender.sendMessage(this.plugin.getI18n().format("command.scan.start.start", world.getName()));
-			sender.sendMessage(this.plugin.getI18n().format("command.scan.start.speed", speed));
-			sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.start.helps"));
+			sender.sendMessage(this.plugin.getI18n().format("command.scan.stats.stats", world.getName()));
+			sender.sendMessage(this.plugin.getI18n().format("command.scan.stats.speed", speed));
+			sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.stats.helps"));
 			new ScanInfom(this.plugin, scanner, sender).runTaskTimer(this.plugin, 200, 200);
 
 			return true;
@@ -174,10 +174,10 @@ public class ScanCommand extends SignPicCommand {
 		}
 	}
 
-	public static class StatusCommand extends SignPicCommand {
+	public static class StatsCommand extends SignPicCommand {
 
-		public StatusCommand(final SignPictureManager plugin) {
-			super(plugin, "status");
+		public StatsCommand(final SignPictureManager plugin) {
+			super(plugin, "stats");
 		}
 
 		@Override
@@ -185,12 +185,12 @@ public class ScanCommand extends SignPicCommand {
 			if (this.plugin.getScanManager().isScanning()) {
 				final Scanner scanner = this.plugin.getScanManager().getCurrentScanner();
 				if (scanner!=null)
-					sender.sendMessage(this.plugin.getI18n().format("command.scan.status.status", scanner.getState(), scanner.getCompleteChunkCount(), scanner.getQueue().size()));
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.stats.stats", scanner.getState(), scanner.getCompleteChunkCount(), scanner.getQueue().size()));
 				if (this.plugin.getScanManager().getQueue().size()>0) {
 					final StringBuilder sb = new StringBuilder();
 					for (final ScanTask task : this.plugin.getScanManager().getQueue())
 						sb.append(task.getWorldName()).append(", ");
-					sender.sendMessage(this.plugin.getI18n().format("command.scan.status.queue", sb));
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.stats.queue", sb));
 				}
 			} else
 				sender.sendMessage(this.plugin.getI18n().format("command.scan.notscanned"));

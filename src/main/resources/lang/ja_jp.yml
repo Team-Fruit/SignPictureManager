@@ -25,11 +25,11 @@ command:
     speed:
       speed: "[SignPictureManager] スキャン速度を%sに変更しました。"
       invalid: "無効な数字です。"
-    status:
-      status: "スキャン: %s, 完了: %sチャンク, 残り: %sチャンク"
+    stats:
+      stats: "スキャン: %s, 完了: %sチャンク, 残り: %sチャンク"
       queue: "キュー: %s"
 chat:
   scan:
-    status: "経過時間: %s, ステータス: %s, 完了: %sチャンク, 残り: %sチャンク"
+    stats: "経過時間: %s, ステータス: %s, 完了: %sチャンク, 残り: %sチャンク"
 sign:
   replaceText: "このSignPictureを設置する権限はありません！"

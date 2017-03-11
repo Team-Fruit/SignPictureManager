@@ -25,14 +25,14 @@ public class ScanInfom extends BukkitRunnable {
 		final String elapsed = DurationFormatUtils.formatPeriod(this.startTime, System.currentTimeMillis(), "HH:mm:ss");
 		switch (this.scanner.getState()) {
 			case GETCHUNKCOORDS:
-				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.status", elapsed, this.scanner.getState(), 0, 0));
+				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.stats", elapsed, this.scanner.getState(), 0, 0));
 				break;
 			case SCANNING:
 			case PAUSE:
-				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.status", elapsed, this.scanner.getState(), this.scanner.getCompleteChunkCount(), this.scanner.getQueue().size()));
+				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.stats", elapsed, this.scanner.getState(), this.scanner.getCompleteChunkCount(), this.scanner.getQueue().size()));
 				break;
 			case DONE:
-				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.status", elapsed, this.scanner.getState(), 0, 0));
+				this.sender.sendMessage(this.plugin.getI18n().format("chat.scan.stats", elapsed, this.scanner.getState(), 0, 0));
 				cancel();
 			default:
 				return;
