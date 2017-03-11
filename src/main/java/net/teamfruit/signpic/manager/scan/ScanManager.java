@@ -146,7 +146,7 @@ public class ScanManager {
 		}
 
 		final File queue = new File(this.plugin.getDataFolder(), "scanqueue.ser");
-		if (cache.exists()) {
+		if (queue.exists()) {
 			BukkitObjectInputStream bois = null;
 			try {
 				bois = new BukkitObjectInputStream(new FileInputStream(queue));
