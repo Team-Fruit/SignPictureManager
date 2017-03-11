@@ -98,7 +98,7 @@ public class SignPictureManager extends JavaPlugin {
 			this.i18n = new I18n(lang);
 
 			if (this.i18n.getVersion()<Reference.LANG_VERSION)
-				updateConfig(langFile, lang, getDefaultConfig(langFileName));
+				updateConfig(langFile, lang, getDefaultConfig("lang/"+langFileName));
 
 			//init DB
 			initDatabase();
