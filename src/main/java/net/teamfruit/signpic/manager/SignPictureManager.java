@@ -48,6 +48,7 @@ public class SignPictureManager extends JavaPlugin {
 	private @Nullable SignDataBase signdata;
 	private @Nullable ScanManager scannerManager;
 	private @Nullable I18n i18n;
+	private @Nullable Log log;
 
 	public SignDataBase getSignData() {
 		if (this.signdata!=null)
@@ -73,6 +74,12 @@ public class SignPictureManager extends JavaPlugin {
 		}
 	}
 
+	public Log getLog() {
+		if (this.log!=null)
+			return this.log;
+		return this.log = new Log(getLogger());
+	}
+
 	@Override
 	public void onLoad() {
 		getLogger().info("Load 1");
@@ -83,6 +90,9 @@ public class SignPictureManager extends JavaPlugin {
 	public void onEnable() {
 		getLogger().info("Enable");
 		try {
+			//init logger
+			this.log = new Log(getLogger());
+
 			//init config.yml
 			final FileConfiguration config = initConfing();
 			if (config.getInt("config-version")<Reference.CONFIG_VERSION)
