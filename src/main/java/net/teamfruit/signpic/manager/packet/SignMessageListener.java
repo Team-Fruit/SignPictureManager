@@ -1,7 +1,6 @@
 package net.teamfruit.signpic.manager.packet;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
@@ -19,23 +18,24 @@ import org.bukkit.plugin.messaging.PluginMessageListener;
 
 import com.kamesuta.mc.signpic.entry.EntryId;
 
+import net.teamfruit.signpic.manager.Log;
 import net.teamfruit.signpic.manager.SignPictureManager;
 import net.teamfruit.signpic.manager.database.SignData;
 
 public class SignMessageListener implements PluginMessageListener {
 	private final SignPictureManager plugin;
-	private final Logger logger;
+	private final Log logger;
 
 	public SignMessageListener(final SignPictureManager plugin) {
 		this.plugin = plugin;
-		this.logger = plugin.getLogger();
+		this.logger = plugin.getLog();
 	}
 
 	@Override
 	public void onPluginMessageReceived(final @Nullable String channel, final @Nullable Player player, final @Nullable byte[] message) {
 		if (StringUtils.equals(channel, "signpic.manager")) {
 			if (player!=null&&message!=null) {
-				this.logger.info("recv");
+				this.logger.fine("recv");
 				onPacket(player, SignPictureManager.gson.fromJson(new String(message), SignPicturePacket.class));
 			}
 		}
@@ -49,7 +49,7 @@ public class SignMessageListener implements PluginMessageListener {
 				if (datas!=null) {
 					if (0<=i&&i<datas.size()) {
 						final SignData data = datas.get(i);
-						this.logger.info("send");
+						this.logger.fine("send");
 						player.sendPluginMessage(this.plugin, "signpic.manager", SignPictureManager.gson.toJson(new SignPicturePacket("data", packet.data, data.toString())).getBytes());
 					}
 				}

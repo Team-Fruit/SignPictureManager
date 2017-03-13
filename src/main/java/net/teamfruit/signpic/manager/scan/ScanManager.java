@@ -8,12 +8,9 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.util.io.BukkitObjectInputStream;
 import org.bukkit.util.io.BukkitObjectOutputStream;
@@ -21,6 +18,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 
+import net.teamfruit.signpic.manager.Log;
 import net.teamfruit.signpic.manager.SignPictureManager;
 import net.teamfruit.signpic.manager.scan.Scanner.ScanData;
 import net.teamfruit.signpic.manager.scan.Scanner.ScanState;
@@ -28,14 +26,14 @@ import net.teamfruit.signpic.manager.scan.Scanner.ScanState;
 public class ScanManager {
 
 	private final SignPictureManager plugin;
-	private final Logger logger;
+	private final Log logger;
 
 	private Queue<ScanTask> queue = Queues.newArrayDeque();
 	private @Nullable ScanTask current;
 
 	public ScanManager(final SignPictureManager plugin) {
 		this.plugin = plugin;
-		this.logger = plugin.getLogger();
+		this.logger = plugin.getLog();
 	}
 
 	public Scanner scan(final Scanner scanner, final int speed) {
@@ -132,15 +130,15 @@ public class ScanManager {
 				scan(task);
 				this.logger.info("Scan of SignPicture restarted.");
 			} catch (final IOException e) {
-				this.logger.log(Level.WARNING, "Failed to read the data of the last interrupted scan.", e);
+				this.logger.warning(/*"Failed to read the data of the last interrupted scan.",*/ e);
 			} catch (final ClassNotFoundException e) {
-				this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
+				this.logger.warning(e);
 			} finally {
 				try {
 					if (bois!=null)
 						bois.close();
 				} catch (final IOException e) {
-					this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
+					this.logger.warning(e);
 				}
 				cache.delete();
 			}
@@ -153,15 +151,15 @@ public class ScanManager {
 				bois = new BukkitObjectInputStream(new FileInputStream(queue));
 				this.queue = Queues.newArrayDeque((ArrayList) bois.readObject());
 			} catch (final IOException e) {
-				this.logger.log(Level.WARNING, "Failed to read the data of the scan added to the task.", e);
+				this.logger.warning(/*"Failed to read the data of the scan added to the task.",*/ e);
 			} catch (final ClassNotFoundException e) {
-				this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
+				this.logger.warning(e);
 			} finally {
 				try {
 					if (bois!=null)
 						bois.close();
 				} catch (final IOException e) {
-					this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
+					this.logger.warning(e);
 				}
 				queue.delete();
 			}
@@ -178,15 +176,15 @@ public class ScanManager {
 				current.setData(current.getScanner(this.plugin).getData());
 				boos.writeObject(this.current);
 			} catch (final FileNotFoundException e) {
-				this.logger.log(Level.WARNING, "Failed to generate the data file of the scan being executed.", e);
+				this.logger.warning(/*"Failed to generate the data file of the scan being executed.",*/ e);
 			} catch (final IOException e) {
-				this.logger.log(Level.WARNING, "Failed to save the data file of the scan being executed.", e);
+				this.logger.warning(/*"Failed to save the data file of the scan being executed.",*/ e);
 			} finally {
 				try {
 					if (boos!=null)
 						boos.close();
 				} catch (final IOException e) {
-					this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
+					this.logger.warning(e);
 				}
 			}
 		}
@@ -197,15 +195,15 @@ public class ScanManager {
 				boos = new BukkitObjectOutputStream(new FileOutputStream(new File(this.plugin.getDataFolder(), "scanqueue.ser")));
 				boos.writeObject(Lists.newArrayList(this.queue));
 			} catch (final FileNotFoundException e) {
-				this.logger.log(Level.WARNING, "Failed to generate the data file of the scan added to the queue.", e);
+				this.logger.warning(/*"Failed to generate the data file of the scan added to the queue.",*/ e);
 			} catch (final IOException e) {
-				this.logger.log(Level.WARNING, "Failed to save the data file of the scan added to the queue.", e);
+				this.logger.warning(/*"Failed to save the data file of the scan added to the queue.", */e);
 			} finally {
 				try {
 					if (boos!=null)
 						boos.close();
 				} catch (final IOException e) {
-					this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
+					this.logger.warning(e);
 				}
 			}
 		}

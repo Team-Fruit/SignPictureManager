@@ -1,8 +1,6 @@
 package net.teamfruit.signpic.manager;
 
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.exception.ExceptionUtils;
@@ -31,13 +29,13 @@ import net.teamfruit.signpic.manager.database.SignDataBase;
 import net.teamfruit.signpic.manager.meta.SignMeta;
 
 public class SignEvent implements Listener {
-	private final Logger logger;
+	private final Log logger;
 	public final SignDataBase signdata;
 	public final FileConfiguration config;
 	public final I18n i18n;
 
 	public SignEvent(final SignPictureManager plugin) {
-		this.logger = plugin.getLogger();
+		this.logger = plugin.getLog();
 		this.signdata = plugin.getSignData();
 		this.config = plugin.getConfig();
 		this.i18n = plugin.getI18n();
@@ -101,7 +99,7 @@ public class SignEvent implements Listener {
 
 	public void signEnable(final Block b, final Player p, final EntryId d) {
 		try {
-			this.logger.info("Placed!");
+			this.logger.fine("Placed!");
 			this.signdata.setSign(b, p, d);
 		} catch (final Exception e) {
 			this.logger.info(ExceptionUtils.getFullStackTrace(e));
@@ -110,7 +108,7 @@ public class SignEvent implements Listener {
 
 	public void signDisable(final Block b) {
 		try {
-			this.logger.info("Removed!");
+			this.logger.fine("Removed!");
 			this.signdata.removeSign(b);
 		} catch (final Exception e) {
 			this.logger.info(ExceptionUtils.getFullStackTrace(e));
@@ -170,7 +168,7 @@ public class SignEvent implements Listener {
 			final String contentType = res.getFirstHeader("Content-Type").getValue();
 			return "image/gif".equalsIgnoreCase(contentType);
 		} catch (final IOException e) {
-			this.logger.log(Level.WARNING, ExceptionUtils.getFullStackTrace(e));
+			this.logger.warning(e);
 		} finally {
 			req.abort();
 		}

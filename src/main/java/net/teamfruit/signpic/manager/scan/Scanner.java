@@ -11,7 +11,6 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -149,7 +148,7 @@ public class Scanner extends BukkitRunnable {
 								try {
 									this.plugin.getSignData().setSign(b, null, EntryId.fromStrings(sign.getLines()));
 								} catch (final Exception e) {
-									this.plugin.getLogger().info(ExceptionUtils.getFullStackTrace(e));
+									this.plugin.getLog().warning(e);
 								}
 							}
 						}

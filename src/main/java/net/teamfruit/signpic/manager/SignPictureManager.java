@@ -12,7 +12,6 @@ import javax.annotation.Nullable;
 import javax.persistence.PersistenceException;
 
 import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -82,23 +81,25 @@ public class SignPictureManager extends JavaPlugin {
 
 	@Override
 	public void onLoad() {
-		getLogger().info("Load 1");
+		//init logger
+		this.log = new Log(getLogger());
+
+		this.log.info("Pre initialization");
 		getDataFolder().mkdirs();
 	}
 
 	@Override
 	public void onEnable() {
-		getLogger().info("Enable");
+		getLog().info("Initialization");
 		try {
-			//init logger
-			this.log = new Log(getLogger());
-
 			//init config.yml
+			getLog().info("init config");
 			final FileConfiguration config = initConfing();
 			if (config.getInt("config-version")<Reference.CONFIG_VERSION)
 				updateConfig(new File(getDataFolder(), "config.yml"), config, getDefaultConfig("config.yml"));
 
 			//init i18n
+			getLog().info("init i18n");
 			final String langName = getConfig().getString("lang");
 			final String langFileName = StringUtils.endsWithIgnoreCase(langName, ".yml") ? langName : langName+".yml";
 			final File langFile = new File(getDataFolder(), "lang/"+langFileName);
@@ -111,27 +112,34 @@ public class SignPictureManager extends JavaPlugin {
 				updateConfig(langFile, lang, getDefaultConfig("lang/"+langFileName));
 
 			//init DB
+			getLog().info("init database");
 			initDatabase();
 			this.signdata = new SignDataBase(this);
 
 			//init plugin event listener
+			getLog().info("init event listener");
 			getServer().getPluginManager().registerEvents(new SignEvent(this), this);
 
 			//init packet handler
+			getLog().info("init packet handler");
 			Bukkit.getMessenger().registerOutgoingPluginChannel(this, "signpic.manager");
 			Bukkit.getMessenger().registerIncomingPluginChannel(this, "signpic.manager", new SignMessageListener(this));
 
 			//init commands
+			getLog().info("init commands");
 			final SignPicCommand rootCommand = new SignPicCommand(this, "signpicturemanager");
 			getCommand("signpicturemanager").setExecutor(rootCommand);
 			rootCommand.registerSubCommand(new OpenCommand(this));
 			rootCommand.registerSubCommand(new ScanCommand(this));
 
 			//init scan manager
+			getLog().info("init scan manager");
 			this.scannerManager = new ScanManager(this);
 			this.scannerManager.onEnable();
+
+			getLog().info("Initialization complete");
 		} catch (final Exception e) {
-			getLogger().info(ExceptionUtils.getFullStackTrace(e));
+			getLog().severe(e);
 			getPluginLoader().disablePlugin(this);
 		}
 	}
