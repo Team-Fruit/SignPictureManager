@@ -130,7 +130,7 @@ public class ScanManager {
 				scan(task);
 				this.logger.info("Scan of SignPicture restarted.");
 			} catch (final IOException e) {
-				this.logger.warning(/*"Failed to read the data of the last interrupted scan.",*/ e);
+				this.logger.warning("Failed to read the data of the last interrupted scan.", e);
 			} catch (final ClassNotFoundException e) {
 				this.logger.warning(e);
 			} finally {
@@ -151,7 +151,7 @@ public class ScanManager {
 				bois = new BukkitObjectInputStream(new FileInputStream(queue));
 				this.queue = Queues.newArrayDeque((ArrayList) bois.readObject());
 			} catch (final IOException e) {
-				this.logger.warning(/*"Failed to read the data of the scan added to the task.",*/ e);
+				this.logger.warning("Failed to read the data of the scan added to the task.", e);
 			} catch (final ClassNotFoundException e) {
 				this.logger.warning(e);
 			} finally {
@@ -176,9 +176,9 @@ public class ScanManager {
 				current.setData(current.getScanner(this.plugin).getData());
 				boos.writeObject(this.current);
 			} catch (final FileNotFoundException e) {
-				this.logger.warning(/*"Failed to generate the data file of the scan being executed.",*/ e);
+				this.logger.warning("Failed to generate the data file of the scan being executed.", e);
 			} catch (final IOException e) {
-				this.logger.warning(/*"Failed to save the data file of the scan being executed.",*/ e);
+				this.logger.warning("Failed to save the data file of the scan being executed.", e);
 			} finally {
 				try {
 					if (boos!=null)
@@ -195,9 +195,9 @@ public class ScanManager {
 				boos = new BukkitObjectOutputStream(new FileOutputStream(new File(this.plugin.getDataFolder(), "scanqueue.ser")));
 				boos.writeObject(Lists.newArrayList(this.queue));
 			} catch (final FileNotFoundException e) {
-				this.logger.warning(/*"Failed to generate the data file of the scan added to the queue.",*/ e);
+				this.logger.warning("Failed to generate the data file of the scan added to the queue.", e);
 			} catch (final IOException e) {
-				this.logger.warning(/*"Failed to save the data file of the scan added to the queue.", */e);
+				this.logger.warning("Failed to save the data file of the scan added to the queue.", e);
 			} finally {
 				try {
 					if (boos!=null)

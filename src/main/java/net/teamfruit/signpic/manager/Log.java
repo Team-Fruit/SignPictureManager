@@ -26,13 +26,15 @@ public class Log {
 	}
 
 	private void log(final Level level, final @Nullable Object obj) {
-		if (obj!=null) {
-			if (obj instanceof Throwable)
-				log(level, ExceptionUtils.getFullStackTrace((Throwable) obj));
-			else
-				log(level, obj.toString());
-		} else
-			log(level, "null");
+		log(level, obj!=null ? obj.toString() : "null");
+	}
+
+	private void log(final Level level, final Throwable t) {
+		log(level, ExceptionUtils.getFullStackTrace(t));
+	}
+
+	private void log(final Level level, final String msg, final Throwable t) {
+		this.logger.log(level, msg, t);
 	}
 
 	private void log(final Level level, final boolean b) {
@@ -63,6 +65,14 @@ public class Log {
 		log(SEVERE, obj);
 	}
 
+	public void severe(final Throwable t) {
+		log(SEVERE, t);
+	}
+
+	public void severe(final String msg, final Throwable t) {
+		log(SEVERE, msg, t);
+	}
+
 	public void severe(final boolean b) {
 		log(SEVERE, b);
 	}
@@ -89,6 +99,14 @@ public class Log {
 
 	public void warning(final @Nullable Object obj) {
 		log(WARNING, obj);
+	}
+
+	public void warning(final Throwable t) {
+		log(WARNING, t);
+	}
+
+	public void warning(final String msg, final Throwable t) {
+		log(WARNING, msg, t);
 	}
 
 	public void warning(final boolean b) {
@@ -119,6 +137,14 @@ public class Log {
 		log(INFO, obj);
 	}
 
+	public void info(final Throwable t) {
+		log(INFO, t);
+	}
+
+	public void info(final String msg, final Throwable t) {
+		log(INFO, msg, t);
+	}
+
 	public void info(final boolean b) {
 		log(INFO, b);
 	}
@@ -145,6 +171,14 @@ public class Log {
 
 	public void config(final @Nullable Object obj) {
 		log(CONFIG, obj);
+	}
+
+	public void config(final Throwable t) {
+		log(CONFIG, t);
+	}
+
+	public void config(final String msg, final Throwable t) {
+		log(CONFIG, msg, t);
 	}
 
 	public void config(final boolean b) {
@@ -175,6 +209,14 @@ public class Log {
 		log(FINE, obj);
 	}
 
+	public void fine(final Throwable t) {
+		log(FINE, t);
+	}
+
+	public void fine(final String msg, final Throwable t) {
+		log(FINE, msg, t);
+	}
+
 	public void fine(final boolean b) {
 		log(FINE, b);
 	}
@@ -203,6 +245,14 @@ public class Log {
 		log(FINER, obj);
 	}
 
+	public void finer(final Throwable t) {
+		log(FINER, t);
+	}
+
+	public void finer(final String msg, final Throwable t) {
+		log(FINER, msg, t);
+	}
+
 	public void finer(final boolean b) {
 		log(FINER, b);
 	}
@@ -229,6 +279,14 @@ public class Log {
 
 	public void finest(final @Nullable Object obj) {
 		log(FINEST, obj);
+	}
+
+	public void finest(final Throwable t) {
+		log(FINEST, t);
+	}
+
+	public void finest(final String msg, final Throwable t) {
+		log(FINEST, msg, t);
 	}
 
 	public void finest(final boolean b) {
