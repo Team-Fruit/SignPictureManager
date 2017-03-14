@@ -66,7 +66,7 @@ public class SignPictureManager extends JavaPlugin {
 			return this.i18n;
 		try {
 			final String langName = getConfig().getString("lang");
-			final String langFileName = StringUtils.endsWithIgnoreCase(langName, ".yml") ? langName : langName+".yml";
+			final String langFileName = langName!=null ? StringUtils.endsWithIgnoreCase(langName, ".yml") ? langName : langName+".yml" : "en_us.yml";
 			return this.i18n = new I18n(YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(new File(getDataFolder(), "lang/"+langFileName)), Charsets.UTF_8)));
 		} catch (final FileNotFoundException e) {
 			throw new RuntimeException();
@@ -101,10 +101,15 @@ public class SignPictureManager extends JavaPlugin {
 			//init i18n
 			getLog().info("init i18n");
 			final String langName = getConfig().getString("lang");
-			final String langFileName = StringUtils.endsWithIgnoreCase(langName, ".yml") ? langName : langName+".yml";
-			final File langFile = new File(getDataFolder(), "lang/"+langFileName);
+			String langFileName = langName!=null ? StringUtils.endsWithIgnoreCase(langName, ".yml") ? langName : langName+".yml" : "en_us.yml";
+			File langFile = new File(getDataFolder(), "lang/"+langFileName);
 			if (!langFile.exists())
 				saveResource("lang/"+langFileName, false);
+			if (!langFile.exists()) {
+				langFileName = "en_us.yml";
+				langFile = new File(getDataFolder(), "lang/en_us.yml");
+				saveResource("lang/en_us.yml", false);
+			}
 			final FileConfiguration lang = YamlConfiguration.loadConfiguration(new InputStreamReader(new FileInputStream(langFile), Charsets.UTF_8));
 			this.i18n = new I18n(lang);
 
