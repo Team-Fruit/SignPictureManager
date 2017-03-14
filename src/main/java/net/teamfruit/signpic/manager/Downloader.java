@@ -97,7 +97,7 @@ public class Downloader {
 		final List<Header> headers = new ArrayList<Header>();
 		headers.add(new BasicHeader("Accept-Charset", "utf-8"));
 		headers.add(new BasicHeader("Accept-Language", "ja, en;q=0.8"));
-		headers.add(new BasicHeader("User-Agent", "SignPictureManager"));
+		headers.add(new BasicHeader("User-Agent", Reference.PLUGIN_NAME));
 
 		this.client = HttpClientBuilder.create()
 				.setConnectionManager(this.manager)
