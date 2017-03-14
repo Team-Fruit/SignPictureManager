@@ -101,7 +101,7 @@ public class ScanCommand extends SignPicCommand {
 				if (!this.plugin.getScanManager().isPause()) {
 					final ScanTask task = this.plugin.getScanManager().pause();
 					if (task!=null)
-						sender.sendMessage(this.plugin.getI18n().format("command.scan.pause.pause", task.getWorldName()));
+						sender.sendMessage(this.plugin.getI18n().format("command.scan.pause.pause"));
 					sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.pause.helps"));
 				} else
 					sender.sendMessage(this.plugin.getI18n().format("command.scan.pause.already"));
@@ -123,7 +123,7 @@ public class ScanCommand extends SignPicCommand {
 				if (this.plugin.getScanManager().isPause()) {
 					final ScanTask task = this.plugin.getScanManager().resume();
 					if (task!=null)
-						sender.sendMessage(this.plugin.getI18n().format("command.scan.resume.resume", task.getWorldName()));
+						sender.sendMessage(this.plugin.getI18n().format("command.scan.resume.resume"));
 					sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.resume.helps"));
 				} else
 					sender.sendMessage(this.plugin.getI18n().format("command.scan.resume.already"));
@@ -144,7 +144,7 @@ public class ScanCommand extends SignPicCommand {
 			if (this.plugin.getScanManager().isScanning()) {
 				final ScanTask task = this.plugin.getScanManager().stop();
 				if (task!=null)
-					sender.sendMessage(this.plugin.getI18n().format("command.scan.cancel.cancel", task.getWorldName()));
+					sender.sendMessage(this.plugin.getI18n().format("command.scan.cancel.cancel"));
 			} else
 				sender.sendMessage(this.plugin.getI18n().format("command.scan.notscanned"));
 			return true;
