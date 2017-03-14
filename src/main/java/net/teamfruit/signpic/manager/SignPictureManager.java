@@ -142,7 +142,7 @@ public class SignPictureManager extends JavaPlugin {
 			this.scannerManager = new ScanManager(this);
 			this.scannerManager.onEnable();
 
-			getLog().info("Initialization complete");
+			getLog().info("Enable");
 		} catch (final Exception e) {
 			getLog().severe(e);
 			getPluginLoader().disablePlugin(this);
