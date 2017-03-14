@@ -19,7 +19,7 @@ import net.teamfruit.signpic.manager.scan.ScanInfom;
 import net.teamfruit.signpic.manager.scan.ScanManager.ScanTask;
 import net.teamfruit.signpic.manager.scan.Scanner;
 
-public class ScanCommand extends SignPicCommand {
+public class ScanCommand extends PluginCommand {
 
 	public ScanCommand(final SignPictureManager plugin) {
 		super(plugin, "scan");
@@ -39,7 +39,7 @@ public class ScanCommand extends SignPicCommand {
 		return true;
 	}
 
-	public static class StartCommand extends SignPicCommand {
+	public static class StartCommand extends PluginCommand {
 
 		public StartCommand(final SignPictureManager plugin) {
 			super(plugin, "stats");
@@ -89,7 +89,7 @@ public class ScanCommand extends SignPicCommand {
 		}
 	}
 
-	public static class PauseCommand extends SignPicCommand {
+	public static class PauseCommand extends PluginCommand {
 
 		public PauseCommand(final SignPictureManager plugin) {
 			super(plugin, "pause");
@@ -111,7 +111,7 @@ public class ScanCommand extends SignPicCommand {
 		}
 	}
 
-	public static class ResumeCommand extends SignPicCommand {
+	public static class ResumeCommand extends PluginCommand {
 
 		public ResumeCommand(final SignPictureManager plugin) {
 			super(plugin, "resume");
@@ -133,7 +133,7 @@ public class ScanCommand extends SignPicCommand {
 		}
 	}
 
-	public static class CancelCommand extends SignPicCommand {
+	public static class CancelCommand extends PluginCommand {
 
 		public CancelCommand(final SignPictureManager plugin) {
 			super(plugin, "cancel");
@@ -151,7 +151,7 @@ public class ScanCommand extends SignPicCommand {
 		}
 	}
 
-	public static class SetSpeedCommand extends SignPicCommand {
+	public static class SetSpeedCommand extends PluginCommand {
 
 		public SetSpeedCommand(final SignPictureManager plugin) {
 			super(plugin, "setspeed");
@@ -174,7 +174,7 @@ public class ScanCommand extends SignPicCommand {
 		}
 	}
 
-	public static class StatsCommand extends SignPicCommand {
+	public static class StatsCommand extends PluginCommand {
 
 		public StatsCommand(final SignPictureManager plugin) {
 			super(plugin, "stats");

@@ -11,7 +11,7 @@ import net.teamfruit.signpic.manager.SignPictureManager;
 import net.teamfruit.signpic.manager.database.SignData;
 import net.teamfruit.signpic.manager.packet.SignPicturePacket;
 
-public class OpenCommand extends SignPicCommand {
+public class OpenCommand extends PluginCommand {
 	private final Log logger;
 
 	public OpenCommand(final SignPictureManager plugin) {
