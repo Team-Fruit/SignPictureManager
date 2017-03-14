@@ -1,9 +1,11 @@
 package net.teamfruit.signpic.manager.scan;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FilenameFilter;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Queue;
 import java.util.regex.Matcher;
@@ -163,7 +165,9 @@ public class Scanner extends BukkitRunnable {
 
 	public List<ChunkCoord> getAllChunks() {
 		final List<ChunkCoord> chunks = Lists.newArrayList();
-		final File regionDir = new File(Bukkit.getWorldContainer(), this.world.getName()+"/region");
+		final File regionDir = getRegionDir();
+		if (regionDir==null)
+			return chunks;
 
 		final File[] regionFiles = regionDir.listFiles(new FilenameFilter() {
 			@Override
@@ -188,6 +192,25 @@ public class Scanner extends BukkitRunnable {
 					chunks.add(new ChunkCoord((mcaX<<5)+cx, (mcaZ<<5)+cz));
 		}
 		return chunks;
+	}
+
+	public @Nullable File getRegionDir() {
+		final FileFilter filter = new FileFilter() {
+			@Override
+			public boolean accept(@Nullable final File pathname) {
+				if (pathname!=null&&pathname.isDirectory())
+					return true;
+				return false;
+			}
+		};
+		final Queue<File> searchQueue = Queues.newArrayDeque(Arrays.asList(new File(Bukkit.getWorldContainer(), this.world.getName()).listFiles(filter)));
+		File line;
+		while ((line = searchQueue.poll())!=null) {
+			if (line.getName().equals("region"))
+				return line;
+			searchQueue.addAll(Arrays.asList(line.listFiles(filter)));
+		}
+		return null;
 	}
 
 	public static class ChunkCoord implements Serializable {

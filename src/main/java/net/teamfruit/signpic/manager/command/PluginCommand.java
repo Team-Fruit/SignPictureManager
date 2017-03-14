@@ -64,6 +64,10 @@ public class PluginCommand implements CommandExecutor, TabCompleter {
 
 	@Override
 	public boolean onCommand(final @Nullable CommandSender sender, final @Nullable Command command, final @Nullable String label, final @Nullable String[] args) {
+		return executeSubCommands(sender, command, label, args);
+	}
+
+	protected final boolean executeSubCommands(final @Nullable CommandSender sender, final @Nullable Command command, final @Nullable String label, final @Nullable String[] args) {
 		if (sender!=null&&command!=null&&label!=null&&args!=null) {
 			final boolean b = onSubCommand(sender, command, label, args);
 			final PluginCommand subCommand = getSubCommand(sender, command, label, args);
