@@ -9,7 +9,7 @@ command:
       helps:
         - "/signpic scan pause  Pause scanning."
         - "/signpic scan cancel  Cancel scanning."
-        - "/signpic scan status Get scan status."
+        - "/signpic scan stats Get scan stats."
     pause:
       pause: "[SignPictureManager] Scan was paused."
       already: "Scanning has already paused!"

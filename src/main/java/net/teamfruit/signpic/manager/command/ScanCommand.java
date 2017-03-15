@@ -9,6 +9,7 @@ import org.apache.commons.lang.math.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
 import org.bukkit.command.Command;
+import org.bukkit.command.CommandException;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -42,7 +43,7 @@ public class ScanCommand extends PluginCommand {
 	public static class StartCommand extends PluginCommand {
 
 		public StartCommand(final SignPictureManager plugin) {
-			super(plugin, "stats");
+			super(plugin, "start");
 		}
 
 		@Override
@@ -64,12 +65,12 @@ public class ScanCommand extends PluginCommand {
 					speed = NumberUtils.toInt(args[1], speed);
 			}
 			if (world==null)
-				return false;
+				throw new CommandException();
 
 			final Scanner scanner = this.plugin.getScanManager().scan(new Scanner(this.plugin, world, speed), speed);
-			sender.sendMessage(this.plugin.getI18n().format("command.scan.stats.stats", world.getName()));
-			sender.sendMessage(this.plugin.getI18n().format("command.scan.stats.speed", speed));
-			sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.stats.helps"));
+			sender.sendMessage(this.plugin.getI18n().format("command.scan.start.start", world.getName()));
+			sender.sendMessage(this.plugin.getI18n().format("command.scan.start.speed", speed));
+			sender.sendMessage(this.plugin.getI18n().listFormat("command.scan.start.helps"));
 			new ScanInfom(this.plugin, scanner, sender).runTaskTimer(this.plugin, 200, 200);
 
 			return true;

@@ -9,7 +9,7 @@ command:
       helps:
         - "/signpic scan pause  スキャンを一時停止。"
         - "/signpic scan cancel  スキャンをキャンセル。"
-        - "/signpic scan status スキャンのステータスを取得。"
+        - "/signpic scan stats スキャンの統計を取得。"
     pause:
       pause: "[SignPictureManager] %s のスキャンを一時停止しました。"
       already: "スキャンは既に一時停止されています！"
