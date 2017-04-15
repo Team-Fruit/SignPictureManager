@@ -72,7 +72,7 @@ public class SignEvent implements Listener {
 		}
 	}
 
-	@EventHandler
+	@EventHandler(priority = EventPriority.NORMAL)
 	public void onNormalSignChange(final SignChangeEvent sign) {
 		if (sign.isCancelled())
 			return;
