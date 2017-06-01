@@ -134,19 +134,19 @@ public class SignEvent implements Listener {
 					return false;
 				final int offset = this.config.getInt("limits.offset");
 				if (offset>0) {
-					if (meta.offsets.data().x.get()>offset)
+					if (Math.abs(meta.offsets.data().x.get())>offset)
 						return false;
-					if (meta.offsets.data().y.get()>offset)
+					if (Math.abs(meta.offsets.data().y.get())>offset)
 						return false;
-					if (meta.offsets.data().z.get()>offset)
+					if (Math.abs(meta.offsets.data().z.get())>offset)
 						return false;
 				}
 			}
 			final int size = this.config.getInt("limits.size");
 			if (size>0) {
-				if (meta.sizes.data().height>size)
+				if (Math.abs(meta.sizes.data().height)>size)
 					return false;
-				if (meta.sizes.data().width>size)
+				if (Math.abs(meta.sizes.data().width)>size)
 					return false;
 			}
 		}
