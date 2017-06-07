@@ -31,5 +31,5 @@ command:
 chat:
   scan:
     stats: "経過時間: %s, ステータス: %s, 完了: %sチャンク, 残り: %sチャンク"
-sign:
-  replaceText: "このSignPictureを設置する権限はありません！"
+  permission:
+    deny: "このSignPictureを設置する権限はありません！"

@@ -32,5 +32,5 @@ chat:
   scan:
     stats: "Elapsed time: %s, Status: %s, Complete: %schunks, Remaining: %schunks"
     done: "Scan of %s has ended. Elapsed time: %s, Complete: %schunks"
-sign:
-  replaceText: "You don't have permission to place this SignPicture!"
+  permission:
+    deny: "You don't have permission to place this SignPicture!"

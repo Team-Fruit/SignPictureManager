@@ -81,12 +81,10 @@ public class SignEvent implements Listener {
 			final boolean permission = checkPerm(sign.getBlock().getWorld(), sign.getPlayer(), id);
 			if (!permission) {
 				sign.setCancelled(true);
-				//				if (this.config.getBoolean("replaceSignText")) {
-				//					final String text = this.i18n.format("sign.replaceText");
-				//					this.logger.info(text);
-				//					for (int i = 0; i<=3; i++)
-				//						sign.setLine(i, StringUtils.substring(text, i*15, i*15+15));
-				//				} else
+				if (this.config.getBoolean("sendChatMsg")) {
+					final String text = this.i18n.format("chat.permission.deny");
+					sign.getPlayer().sendMessage(text);
+				}
 				sign.getBlock().breakNaturally();
 			}
 		}
