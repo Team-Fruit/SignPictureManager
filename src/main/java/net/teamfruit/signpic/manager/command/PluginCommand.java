@@ -29,9 +29,10 @@ public class PluginCommand implements CommandExecutor, TabCompleter {
 		this.name = name;
 	}
 
-	public void registerSubCommand(final PluginCommand command) {
+	public PluginCommand registerSubCommand(final PluginCommand command) {
 		command.setParent(this);
 		this.subCommands.add(command);
+		return this;
 	}
 
 	public String getFullCommandName() {

@@ -49,12 +49,16 @@ permissions:
     children:
       signpic.command.open: true
       signpic.command.scan: true
+      signpic.command.reload: true
   signpic.command.open:
     description: Command to open client's Gui.
     default: op
   signpic.command.scan:
     description: Permission to execute all scan commands.
-    default: op
+    default: false
+  signpic.command.reload:
+    description: Reload SignPictureManager.
+    default: false
   signpic.manage.*:
     description: Permission to operate SignPicture.
     default: op

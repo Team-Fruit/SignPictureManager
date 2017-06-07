@@ -25,6 +25,7 @@ import com.google.gson.GsonBuilder;
 
 import net.teamfruit.signpic.manager.command.OpenCommand;
 import net.teamfruit.signpic.manager.command.PluginCommand;
+import net.teamfruit.signpic.manager.command.ReloadCommand;
 import net.teamfruit.signpic.manager.command.ScanCommand;
 import net.teamfruit.signpic.manager.database.SignData;
 import net.teamfruit.signpic.manager.database.SignDataBase;
@@ -132,10 +133,11 @@ public class SignPictureManager extends JavaPlugin {
 
 			//init commands
 			getLog().fine("init commands");
-			final PluginCommand rootCommand = new PluginCommand(this, "signpicturemanager");
+			final PluginCommand rootCommand = new PluginCommand(this, "signpicturemanager")
+					.registerSubCommand(new OpenCommand(this))
+					.registerSubCommand(new ScanCommand(this))
+					.registerSubCommand(new ReloadCommand(this));
 			getCommand("signpicturemanager").setExecutor(rootCommand);
-			rootCommand.registerSubCommand(new OpenCommand(this));
-			rootCommand.registerSubCommand(new ScanCommand(this));
 
 			//init scan manager
 			getLog().fine("init scan manager");
