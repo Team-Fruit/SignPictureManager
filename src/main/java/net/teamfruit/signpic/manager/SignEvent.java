@@ -129,6 +129,7 @@ public class SignEvent implements Listener {
 				return false;
 			if (meta.rotations.isInclude()&&!player.hasPermission("signpic.place.rotation"))
 				return false;
+			this.logger.info(meta.offsets.isInclude());
 			if (meta.offsets.isInclude()) {
 				if (!player.hasPermission("signpic.place.offset"))
 					return false;
