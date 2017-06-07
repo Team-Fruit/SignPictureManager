@@ -24,8 +24,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import net.teamfruit.signpic.manager.command.OpenCommand;
-import net.teamfruit.signpic.manager.command.ScanCommand;
 import net.teamfruit.signpic.manager.command.PluginCommand;
+import net.teamfruit.signpic.manager.command.ScanCommand;
 import net.teamfruit.signpic.manager.database.SignData;
 import net.teamfruit.signpic.manager.database.SignDataBase;
 import net.teamfruit.signpic.manager.database.SignDataTypeAdapter;
@@ -167,7 +167,6 @@ public class SignPictureManager extends JavaPlugin {
 
 	@Override
 	public void onDisable() {
-		getLogger().info("Disable");
 		initConfing();
 		if (this.scannerManager!=null)
 			this.scannerManager.onDisable();

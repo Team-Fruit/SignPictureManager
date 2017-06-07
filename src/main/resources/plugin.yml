@@ -16,21 +16,22 @@ permissions:
     description: Full permission of SignPictureManager.
     default: false
     children:
-      signpic.ignoresettings: true
       signpic.place.*: true
       signpic.command.*: true
       signpic.manage.*: true
-  signpic.ignoreettings:
-    description: Ignore limits set in Config.
-    default: false
-  signpic.place.*:
-    description: Permission to place SignPicture with all attributes.
+  signpic.place:
+    description: Place SignPicture.
     default: true
     children:
       signpic.place.offset: true
       signpic.place.animation: true
       signpic.place.rotation: true
       signpic.place.gif: true
+  signpic.place.*:
+    description: Permission to place SignPicture with all attributes.
+    default: true
+    children:
+      signpic.place: true
   signpic.place.offset:
     description: Allow placing of SignPicture with offset attribute.
     default: true
