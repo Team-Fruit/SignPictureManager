@@ -85,7 +85,8 @@ public class SignEvent implements Listener {
 					final String text = this.i18n.format("sign.replaceText");
 					for (int i = 0; i<=3; i++)
 						sign.setLine(i, StringUtils.substring(text, i*15, (i+1)*15));
-				}
+				} else
+					sign.getBlock().breakNaturally();
 			}
 		}
 	}
@@ -127,7 +128,6 @@ public class SignEvent implements Listener {
 				return false;
 			if (meta.rotations.isInclude()&&!player.hasPermission("signpic.place.rotation"))
 				return false;
-			this.logger.info(meta.offsets.isInclude());
 			if (meta.offsets.isInclude()) {
 				if (!player.hasPermission("signpic.place.offset"))
 					return false;
