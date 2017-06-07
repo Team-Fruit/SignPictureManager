@@ -118,8 +118,6 @@ public class SignEvent implements Listener {
 	public boolean checkPerm(final World world, final Player player, final EntryId id) {
 		if (!player.hasPermission("signpic.place"))
 			return false;
-		if (player.hasPermission("signpic.ignoresettings"))
-			return true;
 		for (final String str : this.config.getStringList("dimBlacklist"))
 			if (world.getName().equalsIgnoreCase(str))
 				return false;
