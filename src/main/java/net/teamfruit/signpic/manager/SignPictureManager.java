@@ -84,7 +84,7 @@ public class SignPictureManager extends JavaPlugin {
 		//init logger
 		this.log = new Log(getLogger());
 
-		this.log.info("Pre initialization");
+		this.log.fine("Pre initialization");
 		getDataFolder().mkdirs();
 	}
 
@@ -93,13 +93,13 @@ public class SignPictureManager extends JavaPlugin {
 		getLog().info("Initialization");
 		try {
 			//init config.yml
-			getLog().info("init config");
+			getLog().fine("init config");
 			final FileConfiguration config = initConfing();
 			if (config.getInt("config-version")<Reference.CONFIG_VERSION)
 				updateConfig(new File(getDataFolder(), "config.yml"), config, getDefaultConfig("config.yml"));
 
 			//init i18n
-			getLog().info("init i18n");
+			getLog().fine("init i18n");
 			final String langName = getConfig().getString("lang");
 			String langFileName = langName!=null ? StringUtils.endsWithIgnoreCase(langName, ".yml") ? langName : langName+".yml" : "en_us.yml";
 			File langFile = new File(getDataFolder(), "lang/"+langFileName);
@@ -117,32 +117,32 @@ public class SignPictureManager extends JavaPlugin {
 				updateConfig(langFile, lang, getDefaultConfig("lang/"+langFileName));
 
 			//init DB
-			getLog().info("init database");
+			getLog().fine("init database");
 			initDatabase();
 			this.signdata = new SignDataBase(this);
 
 			//init plugin event listener
-			getLog().info("init event listener");
+			getLog().fine("init event listener");
 			getServer().getPluginManager().registerEvents(new SignEvent(this), this);
 
 			//init packet handler
-			getLog().info("init packet handler");
+			getLog().fine("init packet handler");
 			Bukkit.getMessenger().registerOutgoingPluginChannel(this, "signpic.manager");
 			Bukkit.getMessenger().registerIncomingPluginChannel(this, "signpic.manager", new SignMessageListener(this));
 
 			//init commands
-			getLog().info("init commands");
+			getLog().fine("init commands");
 			final PluginCommand rootCommand = new PluginCommand(this, "signpicturemanager");
 			getCommand("signpicturemanager").setExecutor(rootCommand);
 			rootCommand.registerSubCommand(new OpenCommand(this));
 			rootCommand.registerSubCommand(new ScanCommand(this));
 
 			//init scan manager
-			getLog().info("init scan manager");
+			getLog().fine("init scan manager");
 			this.scannerManager = new ScanManager(this);
 			this.scannerManager.onEnable();
 
-			getLog().info("Enable");
+			getLog().fine("Enable");
 		} catch (final Exception e) {
 			getLog().severe(e);
 			getPluginLoader().disablePlugin(this);

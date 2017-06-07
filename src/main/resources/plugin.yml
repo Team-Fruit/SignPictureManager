@@ -26,6 +26,7 @@ permissions:
     description: Permission to place SignPicture with all attributes.
     default: true
     children:
+      signpic.place: true
       signpic.place.offset: true
       signpic.place.animation: true
       signpic.place.rotation: true
