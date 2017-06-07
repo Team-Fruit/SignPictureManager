@@ -17,6 +17,7 @@ public class ReloadCommand extends PluginCommand {
 		this.plugin.onDisable();
 		this.plugin.onLoad();
 		this.plugin.onEnable();
+		sender.sendMessage("Reload completed");
 		return true;
 	}
 }
