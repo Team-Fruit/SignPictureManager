@@ -14,9 +14,8 @@ public class ReloadCommand extends PluginCommand {
 
 	@Override
 	public boolean onSubCommand(final CommandSender sender, final Command command, final String label, final String[] args) {
-		this.plugin.onDisable();
-		this.plugin.onLoad();
-		this.plugin.onEnable();
+		this.plugin.getPluginLoader().disablePlugin(this.plugin);
+		this.plugin.getPluginLoader().enablePlugin(this.plugin);
 		sender.sendMessage("Reload completed");
 		return true;
 	}

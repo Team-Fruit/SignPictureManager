@@ -91,7 +91,7 @@ public class SignPictureManager extends JavaPlugin {
 
 	@Override
 	public void onEnable() {
-		getLog().info("Initialization");
+		getLog().fine("Initialization");
 		try {
 			//init config.yml
 			getLog().fine("init config");
