@@ -9,7 +9,7 @@ public class ReloadCommand extends PluginCommand {
 
 	public ReloadCommand(final SignPictureManager plugin) {
 		super(plugin, "reload");
-		setPermission("signpic.command.reload");
+		setPermission("signpic.manage.reload");
 	}
 
 	@Override

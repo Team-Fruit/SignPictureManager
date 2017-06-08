@@ -24,7 +24,7 @@ public class ScanCommand extends PluginCommand {
 
 	public ScanCommand(final SignPictureManager plugin) {
 		super(plugin, "scan");
-		setPermission("signpic.command.scan");
+		setPermission("signpic.manage.scan");
 		registerSubCommand(new StartCommand(plugin));
 		registerSubCommand(new PauseCommand(plugin));
 		registerSubCommand(new ResumeCommand(plugin));

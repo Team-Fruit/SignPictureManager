@@ -16,7 +16,7 @@ public class OpenCommand extends PluginCommand {
 
 	public OpenCommand(final SignPictureManager plugin) {
 		super(plugin, "open");
-		setPermission("signpic.command.open");
+		setPermission("signpic.manage.open");
 		this.logger = this.plugin.getLog();
 	}
 

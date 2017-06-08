@@ -43,28 +43,24 @@ permissions:
   signpic.place.gif:
     description: Allow to place SignPicture of Gif image.
     default: true
-  signpic.command.*:
-    description: Execution permission of all commands.
-    default: op
-    children:
-      signpic.command.open: true
-      signpic.command.scan: true
-      signpic.command.reload: true
-  signpic.command.open:
-    description: Command to open client's Gui.
-    default: op
-  signpic.command.scan:
-    description: Permission to execute all scan commands.
-    default: false
-  signpic.command.reload:
-    description: Reload SignPictureManager.
-    default: false
   signpic.manage.*:
     description: Permission to operate SignPicture.
     default: op
     children:
+      signpic.manage.open: true
+      signpic.manage.scan: true
+      signpic.manage.reload: true
       signpic.manage.edit: true
       signpic.manage.remove: true
+  signpic.manage.open:
+    description: Command to open client's Gui.
+    default: op
+  signpic.manage.scan:
+    description: Permission to execute all scan commands.
+    default: false
+  signpic.manage.reload:
+    description: Reload SignPictureManager.
+    default: false
   signpic.manage.edit:
     description: Permission to rewrite SignPicture.
     default: op
