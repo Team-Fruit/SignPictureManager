@@ -167,7 +167,7 @@ public class ScanCommand extends PluginCommand {
 					sender.sendMessage(this.plugin.getI18n().format("command.scan.speed.invalid"));
 					return true;
 				}
-				final ScanTask task = this.plugin.getScanManager().setSpeed(NumberUtils.toInt(args[0]));
+				this.plugin.getScanManager().setSpeed(NumberUtils.toInt(args[0]));
 				sender.sendMessage(this.plugin.getI18n().format("command.scan.speed.speed", args[0]));
 			} else
 				sender.sendMessage(this.plugin.getI18n().format("command.scan.notscanned"));

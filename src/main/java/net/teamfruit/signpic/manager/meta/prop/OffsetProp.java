@@ -33,7 +33,7 @@ public class OffsetProp implements ISignMetaProp<OffsetProp> {
 		return this;
 	}
 
-	public static class OffsetPropBuilder implements ISignMetaProp {
+	public static class OffsetPropBuilder implements ISignMetaProp<OffsetPropBuilder> {
 		public final String neg;
 		public final String pos;
 

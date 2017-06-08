@@ -26,9 +26,9 @@ public class SignMeta {
 
 	private final boolean hasInvalidMeta;
 
-	private final Set<ISignMetaProp> metas = Sets.newHashSet();
+	private final Set<ISignMetaProp<?>> metas = Sets.newHashSet();
 
-	private <E extends ISignMetaProp> E add(final E e) {
+	private <E extends ISignMetaProp<?>> E add(final E e) {
 		this.metas.add(e);
 		return e;
 	}
@@ -67,7 +67,7 @@ public class SignMeta {
 		boolean bb = true;
 
 		for (final Entry<Float, String> entry : timeline.entrySet()) {
-			final float time = entry.getKey();
+			//			final float time = entry.getKey();
 			final String meta = entry.getValue();
 
 			final Matcher mp = p.matcher(meta);
@@ -78,7 +78,7 @@ public class SignMeta {
 					final String value = 2<=gcount ? mp.group(2) : "";
 					if (!StringUtils.isEmpty(key)||!StringUtils.isEmpty(value)) {
 						boolean b = false;
-						for (final ISignMetaProp m : this.metas)
+						for (final ISignMetaProp<?> m : this.metas)
 							b = m.parse(src, key, value)||b;
 						bb = b&&bb;
 					}

@@ -13,11 +13,12 @@ import com.kamesuta.mc.signpic.entry.EntryId;
 import net.teamfruit.signpic.manager.SignPictureManager;
 
 public class SignDataBase {
-	private final SignPictureManager plugin;
+
+	//	private final SignPictureManager plugin;
 	private final EbeanServer db;
 
 	public SignDataBase(final SignPictureManager plugin) {
-		this.plugin = plugin;
+		//		this.plugin = plugin;
 		this.db = plugin.getDatabase();
 	}
 

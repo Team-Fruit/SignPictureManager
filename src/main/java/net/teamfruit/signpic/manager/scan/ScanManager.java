@@ -120,6 +120,7 @@ public class ScanManager {
 		return this.current;
 	}
 
+	@SuppressWarnings("unchecked")
 	public void onEnable() {
 		final File cache = new File(this.plugin.getDataFolder(), "scancache.ser");
 		if (cache.exists()) {
@@ -149,7 +150,7 @@ public class ScanManager {
 			BukkitObjectInputStream bois = null;
 			try {
 				bois = new BukkitObjectInputStream(new FileInputStream(queue));
-				this.queue = Queues.newArrayDeque((ArrayList) bois.readObject());
+				this.queue = Queues.newArrayDeque((ArrayList<ScanTask>) bois.readObject());
 			} catch (final IOException e) {
 				this.logger.warning("Failed to read the data of the scan added to the task.", e);
 			} catch (final ClassNotFoundException e) {
