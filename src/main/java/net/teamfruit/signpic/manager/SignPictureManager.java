@@ -15,6 +15,10 @@ import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.google.common.base.Charsets;
@@ -33,7 +37,7 @@ import net.teamfruit.signpic.manager.database.SignDataTypeAdapter;
 import net.teamfruit.signpic.manager.packet.SignMessageListener;
 import net.teamfruit.signpic.manager.scan.ScanManager;
 
-public class SignPictureManager extends JavaPlugin {
+public class SignPictureManager extends JavaPlugin implements Listener {
 	public static Gson gson;
 
 	static {
@@ -193,5 +197,11 @@ public class SignPictureManager extends JavaPlugin {
 				newer.set(key, older.get(key));
 		}
 		newer.save(file);
+	}
+
+	@EventHandler(priority = EventPriority.MONITOR)
+	public void onLogOut(final PlayerQuitEvent event) {
+		if (this.tokendata.containsKey(event.getPlayer().getName()))
+			this.tokendata.remove(event.getPlayer().getName());
 	}
 }
